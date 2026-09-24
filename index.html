@@ -1,151 +1,258 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 🔑 GOOGLE SEARCH CONSOLE VERIFICATION TAG -->
-    <meta name="google-site-verification" content="jI9dFBuldtce3JrwJm5KG7Bi82bFqo_pSyTg4BCbxnA" />
-    
-    <!-- 📈 SEO META TAGS: Google Ranking Boosters -->
     <title>Fastest Video Downloader - Download Reels, Shorts & MP4 Free</title>
-    <meta name="description" content="Download Instagram Reels, YouTube Shorts, TikTok and Facebook videos in high quality for free. Fast, safe, and no login required. 1-click mobile downloader.">
-    <meta name="keywords" content="video downloader, download instagram reels, youtube shorts downloader, free video downloader, tiktok video download, mp4 downloader mobile">
-    <meta name="robots" content="index, follow">
-    
-    <!-- 🌐 Open Graph Tags (For Better Social Media Link Sharing) -->
-    <meta property="og:title" content="Fast Online Video Downloader - Download Reels & Shorts">
-    <meta property="og:description" content="Save social media videos instantly in high quality. No sign-up required. Free & Fast.">
-    <meta property="og:type" content="website">
-
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #121212; color: #ffffff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        .container { max-width: 600px; width: 100%; background: #1e1e1e; padding: 30px; border-radius: 15px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center; margin-top: 20px; }
-        h1 { color: #ff3366; margin-bottom: 10px; font-size: 28px; }
-        p { color: #aaa; margin-bottom: 25px; font-size: 14px; }
-        .input-group { display: flex; flex-direction: column; gap: 12px; }
-        input { width: 100%; padding: 15px; border: 2px solid #333; border-radius: 8px; background: #2a2a2a; color: #fff; font-size: 16px; outline: none; transition: 0.3s; }
-        input:focus { border-color: #ff3366; }
-        button { width: 100%; padding: 15px; background: #ff3366; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #e02454; }
-        .loading { display: none; margin: 20px 0; color: #ff3366; font-weight: bold; }
-        .result-box { display: none; margin-top: 25px; padding: 20px; background: #2a2a2a; border-radius: 8px; border: 1px solid #444; }
-        .result-box img { max-width: 100%; border-radius: 8px; margin-bottom: 15px; max-height: 200px; object-fit: cover; }
-        .download-btn { display: inline-block; width: 100%; padding: 12px; background: #00ca72; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 10px; }
-        .download-btn:hover { background: #00b162; }
-        .ad-space { width: 100%; display: flex; justify-content: center; align-items: center; margin: 20px 0; min-height: 60px; overflow: hidden; }
-        
-        /* 🏷️ SEO Extra Info Section Styling */
-        .seo-info { max-width: 600px; width: 100%; text-align: left; margin-top: 30px; background: #1e1e1e; padding: 20px; border-radius: 12px; border: 1px solid #2a2a2a; }
-        .seo-info h2 { color: #ff3366; font-size: 18px; margin-bottom: 8px; margin-top: 15px; }
-        .seo-info ul { margin-left: 20px; color: #aaa; font-size: 14px; margin-top: 5px; }
-        .seo-info li { margin-bottom: 4px; }
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: rgba(22, 24, 35, 0.6);
+            --accent-color: #ff2d55;
+            --accent-hover: #e02447;
+            --text-color: #ffffff;
+            --text-muted: #a4a6b0;
+            --border-glow: rgba(255, 45, 85, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 15px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Glassmorphic Premium Card */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-glow);
+            box-shadow: 0 8px 32px 0 rgba(255, 45, 85, 0.1);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(255, 45, 85, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent-color);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 45, 85, 0.3);
+        }
+
+        button:active {
+            transform: scale(0.98);
+            background: var(--accent-hover);
+        }
+
+        /* Clean Info Section */
+        .info-section {
+            text-align: left;
+        }
+
+        .info-section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--text-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        .info-section h3 {
+            font-size: 1.1rem;
+            margin: 15px 0 10px 0;
+            color: var(--accent-color);
+        }
+
+        .info-section p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-section li {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .info-section li::before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Premium Ads Container Layout */
+        .ad-container-slim {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px;
+            margin: 5px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .ad-container-box {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 🟢 1st AD CODE (Top Banner - 728x90) -->
-    <div class="ad-space">
-        <script>
-          atOptions = {
-            'key' : '407953d4e5ca65704f8161bb59cdc6b0',
-            'format' : 'iframe',
-            'height' : 90,
-            'width' : 728,
-            'params' : {}
-          };
-        </script>
-        <script src="https://highrevenueformat.com"></script>
-    </div>
-
     <div class="container">
-        <!-- 🎯 SEO Content Optimization: H1 and P tag update -->
-        <h1>Free Online Video Downloader</h1>
-        <p>Download HD Videos from Instagram, YouTube Shorts, TikTok & More Instantly!</p>
         
-        <div class="input-group">
-            <input type="url" id="videoUrl" placeholder="Paste social media video link here..." required>
-            <button onclick="downloadVideo()">Fetch Video</button>
+        <!-- MAIN DOWNLOADER CARD -->
+        <div class="card">
+            <h1>Free Online Video Downloader</h1>
+            <p class="subtitle">Download HD Videos from Instagram, YouTube Shorts, TikTok & More Instantly!</p>
+            
+            <div class="input-group">
+                <input type="text" placeholder="Paste social media video link here...">
+                <button>Fetch Video</button>
+            </div>
         </div>
 
-        <!-- 🔵 2nd AD CODE (Middle Banner - 468x60) -->
-        <div class="ad-space" style="margin-top: 25px; min-height: 60px;">
-            <script>
-              atOptions = {
-                'key' : '2e85e55626de22317840450093cc4f00',
-                'format' : 'iframe',
-                'height' : 60,
-                'width' : 468,
-                'params' : {}
-              };
+        <!-- 1st AD PLACEMENT: 320x50 MOBILE BANNER (RIGHT BELOW BUTTON) -->
+        <div class="ad-container-slim">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '31384548',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
             </script>
-            <script src="https://highrevenueformat.com"></script>
+            <script type="text/javascript" src="//://highperformanceformat.com"></script>
         </div>
 
-        <div class="loading" id="loadingText">Processing your link... Please wait...</div>
+        <!-- INFO CARD -->
+        <div class="card info-section">
+            <h2>How to Download Social Media Videos Free?</h2>
+            <p>Hamara free utility tool aapko market me sabse fast processing speed deta hai bina kisi limits ke.</p>
 
-        <!-- रिजल्ट बॉक्स जहाँ डाउनलोड बटन दिखेगा -->
-        <div class="result-box" id="resultBox">
-            <h3 style="color: #00ca72; margin-bottom: 10px;">Video Ready!</h3>
-            <img id="videoThumb" src="" alt="Video Thumbnail">
-            <p id="videoTitle" style="color: #fff; font-size: 14px; margin-bottom: 15px;"></p>
-            <a href="" id="downloadLink" class="download-btn" target="_blank" download>⬇️ Download Video</a>
+            <h3>Supported Platforms for MP4 Downloads</h3>
+            <ul>
+                <li><strong>Instagram Reels Downloader:</strong> Paste link and download directly in HD quality.</li>
+                <li><strong>YouTube Shorts Saver:</strong> Instant mobile video download tool for gaming or tech creators.</li>
+                <li><strong>TikTok Video Downloader:</strong> Fast MP4 parsing without any long waiting buffers.</li>
+            </ul>
         </div>
+
+        <!-- 2nd AD PLACEMENT: 300x250 RECTANGLE BOX (AT THE FOOTER) -->
+        <div class="ad-container-box">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '31384547',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//://highperformanceformat.com"></script>
+        </div>
+
     </div>
 
-    <!-- 📊 TECHNICAL SEO FOOTER CONTENT: Drove traffic via Crawler Keywords -->
-    <div class="seo-info">
-        <h2>How to Download Social Media Videos Free?</h2>
-        <p style="font-size: 13px; color: #aaa;">Hamara free utility tool aapko market me sabse fast processing speed deta hai bina kisi limits ke.</p>
-        
-        <h2>Supported Platforms for MP4 Downloads</h2>
-        <ul>
-            <li><strong>Instagram Reels Downloader:</strong> Paste link and download directly in HD quality.</li>
-            <li><strong>YouTube Shorts Saver:</strong> Instant mobile video download tool for gaming or tech creators.</li>
-            <li><strong>TikTok Video Downloader:</strong> Fast MP4 parsing without any long waiting buffers.</li>
-        </ul>
-    </div>
-
-    <script>
-        async function downloadVideo() {
-            const urlInput = document.getElementById('videoUrl').value.trim();
-            const loadingText = document.getElementById('loadingText');
-            const resultBox = document.getElementById('resultBox');
-            const downloadLink = document.getElementById('downloadLink');
-            const videoThumb = document.getElementById('videoThumb');
-            const videoTitle = document.getElementById('videoTitle');
-
-            if (!urlInput) {
-                alert("Please paste a valid URL first!");
-                return;
-            }
-
-            loadingText.style.display = "block";
-            resultBox.style.display = "none";
-
-            try {
-                // वीडियो फेच करने के लिए फ्री API वर्कर
-                const response = await fetch(`https://workers.dev{encodeURIComponent(urlInput)}`);
-                const data = await response.json();
-
-                if (data && data.data && data.data.url) {
-                    videoThumb.src = data.data.thumbnail || "https://placeholder.com";
-                    videoTitle.innerText = data.data.title || "Social Media Video";
-                    downloadLink.href = data.data.url;
-                    
-                    loadingText.style.display = "none";
-                    resultBox.style.display = "block";
-                } else {
-                    throw new Error("Invalid response from server");
-                }
-            } catch (error) {
-                console.error(error);
-                loadingText.style.display = "none";
-                alert("Oops! Unable to fetch video. Please check the link or try another video.");
-            }
-        }
-    </script>
 </body>
 </html>
+
 
