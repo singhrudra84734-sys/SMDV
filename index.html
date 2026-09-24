@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fastest Video Downloader - Download Reels, Shorts & MP4 Free</title>
+    <title>SMDV - Premium Video Downloader</title>
     <style>
         :root {
-            --bg-color: #0d0e12;
-            --card-bg: rgba(22, 24, 35, 0.6);
-            --accent-color: #ff2d55;
-            --text-color: #ffffff;
-            --text-muted: #a4a6b0;
+            --bg-color: #0F172A; /* Deep Navy/Charcoal */
+            --card-bg: rgba(30, 41, 59, 0.5); /* Semi-transparent Glass */
+            --lime-neon: #00FF87; /* Electric Lime Green */
+            --lime-glow: rgba(0, 255, 135, 0.25);
+            --text-color: #F8FAFC;
+            --text-muted: #94A3B8;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
@@ -27,7 +28,20 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 20px 15px;
+            padding: 30px 15px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Cinematic Background Lighting Glows */
+        body::before {
+            content: "";
+            position: absolute;
+            top: -10%; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 300px;
+            background: radial-gradient(circle, rgba(0, 255, 135, 0.08) 0%, rgba(15, 23, 42, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
         }
 
         .container {
@@ -35,109 +49,184 @@
             max-width: 480px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
+            animation: cyberpunkFade 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 25px 20px;
+        @keyframes cyberpunkFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Logo Branding */
+        .logo-area {
             text-align: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-area span {
+            color: var(--lime-neon);
+            text-shadow: 0 0 15px var(--lime-glow);
+        }
+
+        /* Glassmorphism Central Input Box */
+        .main-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+        }
+
+        .main-card:hover {
+            border-color: rgba(0, 255, 135, 0.3);
+            box-shadow: 0 25px 60px rgba(0, 255, 135, 0.05), 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         h1 {
-            font-size: 1.8rem;
-            color: var(--accent-color);
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
         }
 
         .subtitle {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-bottom: 25px;
+            line-height: 1.4;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
 
+        /* Giant Glowing Search Input Bar */
         input[type="text"] {
             width: 100%;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.05);
+            padding: 18px 20px;
+            background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            color: #fff;
+            border-radius: 16px;
+            color: #ffffff;
             font-size: 1rem;
             outline: none;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
+        input[type="text"]:focus {
+            border-color: var(--lime-neon);
+            box-shadow: 0 0 20px var(--lime-glow), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        /* Vibrant Electric Lime Green Button */
         button {
             width: 100%;
-            padding: 16px;
-            background: var(--accent-color);
+            padding: 18px;
+            background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%);
             border: none;
-            border-radius: 14px;
-            color: white;
-            font-size: 1.05rem;
-            font-weight: 600;
-        }
-
-        .info-section {
-            text-align: left;
-        }
-
-        .info-section h2 {
-            font-size: 1.25rem;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 10px;
-        }
-
-        .info-section h3 {
+            border-radius: 16px;
+            color: #0F172A;
             font-size: 1.1rem;
-            margin: 15px 0 10px 0;
-            color: var(--accent-color);
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(0, 255, 135, 0.35);
+            letter-spacing: 0.5px;
         }
 
-        .info-section p, .info-section li {
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 255, 135, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Minimalist Platform Grid Section */
+        .grid-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 28px;
+            padding: 25px;
+        }
+
+        .grid-card h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            text-align: center;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            letter-spacing: 0.5px;
         }
 
-        .info-section ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
 
-        .info-section li::before {
-            content: "• ";
-            color: var(--accent-color);
+        .platform-item {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 15px 10px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
 
-        /* Ads Wrapper */
-        .ad-slot-1 {
+        .platform-item:hover {
+            border-color: var(--lime-neon);
+            box-shadow: 0 0 15px var(--lime-glow);
+            transform: translateY(-2px);
+            color: var(--lime-neon);
+        }
+
+        .platform-item span {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        /* Ads Container Layout */
+        .ad-container-slim {
             width: 100%;
-            min-height: 50px;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 50px;
             margin: 5px 0;
         }
 
-        .ad-slot-2 {
+        .ad-container-box {
             width: 100%;
-            min-height: 250px;
             display: flex;
             justify-content: center;
-            margin: 10px 0;
-            background: rgba(255,255,255,0.02);
-            border-radius: 16px;
+            align-items: center;
+            min-height: 250px;
+            margin: 5px 0;
+            background: rgba(0, 255, 135, 0.02);
+            border: 1px dashed rgba(0, 255, 135, 0.15);
+            border-radius: 24px;
         }
     </style>
 </head>
@@ -145,19 +234,24 @@
 
     <div class="container">
         
+        <!-- BRAND LOGO -->
+        <div class="logo-area">
+            SM<span>DV</span>
+        </div>
+
         <!-- MAIN DOWNLOADER CARD -->
-        <div class="card">
-            <h1>Free Online Video Downloader</h1>
-            <p class="subtitle">Download HD Videos from Instagram, YouTube Shorts, TikTok & More Instantly!</p>
+        <div class="main-card">
+            <h1>Premium Video Downloader</h1>
+            <p class="subtitle">Download cinematic HD content from social media platforms instantly with zero buffers.</p>
             
             <div class="input-group">
-                <input type="text" placeholder="Paste social media video link here...">
+                <input type="text" placeholder="Paste your video URL link here...">
                 <button>Fetch Video</button>
             </div>
         </div>
 
-        <!-- 2nd ad code: 320x50 MOBILE BANNER -->
-        <div class="ad-slot-1">
+        <!-- 1st AD PLACEMENT: 320x50 MOBILE BANNER (RIGHT BELOW BUTTON) -->
+        <div class="ad-container-slim">
             <script>
               atOptions = {
                 'key' : '23898e2a0db96390e171333f673db484',
@@ -167,24 +261,27 @@
                 'params' : {}
               };
             </script>
-            <script src="https://highrevenueformat.com"></script>
+            <script src="https://www.highrevenueformat.com/23898e2a0db96390e171333f673db484/invoke.js"></script>
         </div>
 
-        <!-- INFO CARD -->
-        <div class="card info-section">
-            <h2>How to Download Social Media Videos Free?</h2>
-            <p>Hamara free utility tool aapko market me sabse fast processing speed deta hai bina kisi limits ke.</p>
-
-            <h3>Supported Platforms for MP4 Downloads</h3>
-            <ul>
-                <li>Instagram Reels Downloader: Paste link and download directly in HD quality.</li>
-                <li>YouTube Shorts Saver: Instant mobile video download tool for gaming or tech creators.</li>
-                <li>TikTok Video Downloader: Fast MP4 parsing without any long waiting buffers.</li>
-            </ul>
+        <!-- MINIMALIST SUPPORTED PLATFORMS GRID -->
+        <div class="grid-card">
+            <h2>SUPPORTED NETWORKS</h2>
+            <div class="platform-grid">
+                <div class="platform-item">
+                    <span>📺</span>YouTube
+                </div>
+                <div class="platform-item">
+                    <span>📸</span>Instagram
+                </div>
+                <div class="platform-item">
+                    <span>🎵</span>TikTok
+                </div>
+            </div>
         </div>
 
-        <!-- 1st ad code: 300x250 RECTANGLE BOX -->
-        <div class="ad-slot-2">
+        <!-- 2nd AD PLACEMENT: 300x250 RECTANGLE BOX (AT THE FOOTER) -->
+        <div class="ad-container-box">
             <script>
               atOptions = {
                 'key' : 'c32dd45d144531ffa6d8ef8549b1a33f',
@@ -194,13 +291,10 @@
                 'params' : {}
               };
             </script>
-            <script src="https://highrevenueformat.com"></script>
+            <script src="https://www.highrevenueformat.com/c32dd45d144531ffa6d8ef8549b1a33f/invoke.js"></script>
         </div>
 
     </div>
 
 </body>
 </html>
-
-
-
