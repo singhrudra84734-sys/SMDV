@@ -3,178 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMDV - Premium YouTube Thumbnail Downloader</title>
-    <!-- SEO Meta Description -->
-    <meta name="description" content="SMDV is the ultimate independent premium YouTube Thumbnail Downloader. Download high-quality YouTube video thumbnails in Full HD instantly for free.">
+    <title>SMDV - Premium YT Thumbnail Downloader</title>
     <style>
-        :root {
-            --bg-color: #0F172A; 
-            --card-bg: rgba(30, 41, 59, 0.5); 
-            --lime-neon: #00FF87; 
-            --lime-glow: rgba(0, 255, 135, 0.25);
-            --text-color: #F8FAFC;
-            --text-muted: #94A3B8;
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 15px; overflow-x: hidden; position: relative; }
-        body::before { content: ""; position: absolute; top: -10%; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(circle, rgba(0, 255, 135, 0.08) 0%, rgba(15, 23, 42, 0) 70%); z-index: -1; pointer-events: none; }
-        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 25px; animation: cyberpunkFade 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes cyberpunkFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .logo-area { text-align: center; font-size: 2.5rem; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
-        .logo-area span { color: var(--lime-neon); text-shadow: 0 0 15px var(--lime-glow); }
-        
-        .main-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 30px; padding: 35px 25px; text-align: center; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
-        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #ffffff; }
-        .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
-        .input-group { display: flex; flex-direction: column; gap: 15px; }
-        
-        input[type="text"] { width: 100%; padding: 18px 20px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; color: #ffffff; font-size: 1rem; outline: none; text-align: center; }
-        input[type="text"]:focus { border-color: var(--lime-neon); box-shadow: 0 0 20px var(--lime-glow); }
-        
-        button { width: 100%; padding: 18px; background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%); border: none; border-radius: 16px; color: #0F172A; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 255, 135, 0.35); transition: transform 0.2s; }
-        button:hover { transform: scale(1.02); }
-        
-        /* 100% Same Page Preview Box */
-        .result-box { display: none; margin-top: 25px; padding: 20px; background: rgba(30, 41, 59, 0.7); border: 1px solid var(--lime-neon); border-radius: 20px; text-align: center; animation: cyberpunkFade 0.4s ease; }
-        .result-box img { width: 100%; border-radius: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        
-        .download-btn { display: block; width: 100%; padding: 14px; background: #00FF87; color: #0F172A; text-decoration: none; font-weight: 700; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,255,135,0.2); text-align: center; font-size: 1rem; cursor: pointer; border: none; }
-        
-        .grid-card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 28px; padding: 25px; }
-        .grid-card h2 { font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 15px; }
-        .features-list { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; color: var(--text-muted); text-align: left; }
-        .features-list li::before { content: "⚡ "; color: var(--lime-neon); }
+        body {
+            background-color: #0d1117;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-        .ad-container-slim { width: 100%; display: flex; justify-content: center; min-height: 50px; margin: 5px 0; }
-        .ad-container-box { width: 100%; display: flex; justify-content: center; min-height: 250px; margin: 5px 0; background: rgba(0, 255, 135, 0.02); border: 1px dashed rgba(0, 255, 135, 0.15); border-radius: 24px; }
+        /* Container & Main Card */
+        .wrapper {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #00ff87; /* Green highlight matching your app */
+        }
+
+        .card {
+            background: #161b22;
+            border: 1px solid #21262d;
+            border-radius: 24px;
+            padding: 35px 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        p {
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Input Box */
+        .input-group {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px 20px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 14px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #00ff87;
+        }
+
+        input[type="text"]::placeholder {
+            color: #484f58;
+        }
+
+        /* Gradient Button */
+        .btn-fetch {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #00ff87 0%, #60efff 100%);
+            border: none;
+            border-radius: 14px;
+            color: #000000;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.1s;
+        }
+
+        .btn-fetch:hover {
+            opacity: 0.9;
+        }
+
+        .btn-fetch:active {
+            transform: scale(0.98);
+        }
+
+        /* Result Area */
+        .result-area {
+            margin-top: 25px;
+            display: none;
+        }
+
+        .thumbnail-preview {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #30363d;
+        }
+
+        .btn-download {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #ffffff;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .btn-download:hover {
+            background: #30363d;
+        }
+
+        .error-msg {
+            color: #ff7b72;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- BRAND LOGO -->
-        <div class="logo-area">SM<span>DV</span></div>
+    <div class="wrapper">
+        <!-- Logo Area -->
+        <div class="logo">SM<span>DV</span></div>
 
-        <!-- MAIN THUMBNAIL CARD -->
-        <div class="main-card">
+        <!-- Main Card Area -->
+        <div class="card">
             <h1>Premium Thumbnail Downloader</h1>
-            <p class="subtitle">Grab high-resolution YouTube video thumbnails instantly with zero buffering.</p>
-            
+            <p>Download high-quality YouTube video thumbnails instantly with zero hassle.</p>
+
             <div class="input-group">
-                <input type="text" id="videoUrl" placeholder="Paste YouTube Video URL Link Here...">
-                <button onclick="getThumbnail()">Fetch Thumbnail</button>
+                <input type="text" id="videoUrl" placeholder="Paste your YouTube video URL link here...">
+                <div class="error-msg" id="errorMsg">कृपया एक सही YouTube URL दर्ज करें!</div>
             </div>
-            
-            <!-- Completely Independent Same Page Result Area -->
-            <div id="thumbnailResult" class="result-box">
-                <p style="color: var(--lime-neon); margin-bottom: 10px; font-weight: 600;">Your Thumbnail is Ready!</p>
-                <img id="thumbPreview" src="" alt="Thumbnail Preview">
-                <!-- Triggering Same Page Download via JS Blob -->
-                <button id="downloadBtn" onclick="triggerDownload()" class="download-btn">Download Full HD Image 📥</button>
+
+            <button class="btn-fetch" onclick="fetchThumbnail()">Fetch Thumbnail</button>
+
+            <!-- Result Section -->
+            <div class="result-area" id="resultArea">
+                <img src="" alt="Thumbnail Preview" class="thumbnail-preview" id="thumbPreview">
+                <a href="" download="thumbnail.jpg" target="_blank" class="btn-download" id="downloadBtn">Download HD Thumbnail</a>
             </div>
-        </div>
-
-        <!-- 1st AD PLACEMENT: 320x50 MOBILE BANNER -->
-        <div class="ad-container-slim">
-            <script>
-              atOptions = {
-                'key' : '23898e2a0db96390e171333f673db484',
-                'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
-                'params' : {}
-              };
-            </script>
-            <script src="https://www.highrevenueformat.com/23898e2a0db96390e171333f673db484/invoke.js"></script>
-        </div>
-
-        <!-- INFO CARD -->
-        <div class="grid-card">
-            <h2>WHY USE SMDV?</h2>
-            <ul class="features-list">
-                <li>100% Independent & Fast Local Processing</li>
-                <li>Direct Same-Page Download Without Opening New Tabs</li>
-                <li>Completely Unblockable by Chrome and Mobile Browsers</li>
-            </ul>
-        </div>
-
-        <!-- 2nd AD PLACEMENT: 300x250 RECTANGLE BOX -->
-        <div class="ad-container-box">
-            <script>
-              atOptions = {
-                'key' : 'c32dd45d144531ffa6d8ef8549b1a33f',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-              };
-            </script>
-            <script src="https://highrevenueformat.com"></script>
         </div>
     </div>
 
-    <!-- 100% INDEPENDENT SAME-PAGE EXTRACTOR -->
     <script>
-        let globalThumbUrl = "";
+        function fetchThumbnail() {
+            const videoUrl = document.getElementById('videoUrl').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const resultArea = document.getElementById('resultArea');
+            const thumbPreview = document.getElementById('thumbPreview');
+            const downloadBtn = document.getElementById('downloadBtn');
 
-        function getThumbnail() {
-            var url = document.getElementById("videoUrl").value.trim();
-            var resultBox = document.getElementById("thumbnailResult");
-            var imgPreview = document.getElementById("thumbPreview");
-            
-            if(url === "") {
-                alert("कृपया पहले यूट्यूब वीडियो का लिंक डालें! ⚠️");
+            // Reset status
+            errorMsg.style.display = 'none';
+            resultArea.style.display = 'none';
+
+            if (!videoUrl) {
+                errorMsg.innerText = "कृपया पहले लिंक पेस्ट करें!";
+                errorMsg.style.display = 'block';
                 return;
             }
 
-            var videoId = "";
-            
-            if(url.indexOf("://youtube.com") !== -1) {
-                var urlParams = new URLSearchParams(url.substring(url.indexOf('?')));
-                videoId = urlParams.get('v');
-            } else if(url.indexOf("youtu.be/") !== -1) {
-                var parts = url.split("youtu.be/");
-                if(parts[1]) videoId = parts[1].split("?")[0];
-            } else if(url.indexOf("://youtube.com") !== -1) {
-                var parts = url.split("://youtube.com");
-                if(parts[1]) videoId = parts[1].split("?")[0];
+            let videoId = "";
+
+            // YouTube URL से Video ID निकालने के लिए Regex
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = videoUrl.match(regExp);
+
+            if (match && match[2].length === 11) {
+                videoId = match[2];
             } else {
-                alert("अमान्य लिंक! कृपया सही यूट्यूब वीडियो या शॉर्ट्स का लिंक डालें। ❌");
+                errorMsg.innerText = "गलत YouTube URL! कृपया सही लिंक डालें।";
+                errorMsg.style.display = 'block';
                 return;
             }
 
-            if(videoId && videoId.trim() !== "") {
-                // Use a secure reverse proxy to bypass browser CORS and allow true direct same-page downloads
-                globalThumbUrl = "https://weserv.nl" + videoId.trim() + "/maxresdefault.jpg";
-                
-                imgPreview.src = globalThumbUrl;
-                resultBox.style.display = "block";
-                resultBox.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                alert("वीडियो आईडी ढूंढने में असमर्थ! कृपया लिंक दोबारा जांचें। ⚠️");
-            }
+            // Max Resolution Thumbnail URL
+            const thumbnailUrl = `https://youtube.com{videoId}/maxresdefault.jpg`;
+
+            // Preview और Download Link सेट करना
+            thumbPreview.src = thumbnailUrl;
+            downloadBtn.href = thumbnailUrl;
+
+            // रिजल्ट एरिया दिखाना
+            resultArea.style.display = 'block';
         }
-
-        // 100% Same Page Force Download Handler
-        async function triggerDownload() {
-            var btn = document.getElementById("downloadBtn");
-            btn.innerText = "डाउनलोड हो रहा है... ⏳";
-            
-            try {
-                const response = await fetch(globalThumbUrl);
-                const blob = await response.blob();
-                const blobUrl = window.URL.createObjectURL(blob);
-                
-                const link = document.createElement('a');
-                link.href = blobUrl;
-                link.download = "youtube-thumbnail.jpg";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(blobUrl);
-                
-                btn.innerText = "Download Full HD Image 📥";
-            } catch (error) {
-        
+    </script>
+</body>
+</html>
