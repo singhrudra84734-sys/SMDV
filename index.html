@@ -145,7 +145,7 @@
 
         <div class="card">
             <h1>YT Thumbnail Downloader</h1>
-            <p>यहाँ लिंक पेस्ट करें और बिना किसी ब्लॉकिंग या यूआरएल एरर के डायरेक्ट HD में सेव करें।</p>
+            <p>यहाँ लिंक पेस्ट करें और बिना किसी एरर के डायरेक्ट HD थंबनेल गैलरी में सेव करें।</p>
 
             <div class="input-group">
                 <input type="text" id="videoUrl" placeholder="Paste your YouTube video URL link here...">
@@ -167,17 +167,16 @@
     <script>
         let currentVideoId = "";
 
-        // ⚡ नया और एडवांस्ड यूट्यूब आईडी डिटेक्टर फंक्शन
+        // Fixed YouTube ID Detector Function
         function getYouTubeId(url) {
             url = url.trim();
-            // 1. अगर यूजर ने सिर्फ 11 अंकों की डायरेक्ट आईडी डाल दी हो
             if (url.length === 11 && !url.includes("/") && !url.includes(".")) {
                 return url;
             }
-            // 2. हर तरह के यूट्यूब यूआरएल को पहचानने का तगड़ा फॉर्मूला
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|shorts\/|live\/|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
             
+            // Fix: केवल पूरा मैच नहीं, बल्कि ID ग्रुप (match[2]) को रिटर्न करना है
             return (match && match[2].length === 11) ? match[2] : null;
         }
 
@@ -195,12 +194,10 @@
                 return;
             }
 
-            // आईडी निकालने की कोशिश करें
             const videoId = getYouTubeId(videoUrl);
 
             if (videoId) {
                 currentVideoId = videoId;
-                // प्रीव्यू लोड करें
                 document.getElementById('imgPreview').src = `https://youtube.com{currentVideoId}/maxresdefault.jpg`;
                 resultArea.style.display = 'block';
             } else {
@@ -209,7 +206,7 @@
             }
         }
 
-        // ⚡ ब्लॉकिंग बाईपास करने वाला प्रॉक्सी फंक्शन
+        // Fixed Direct Download Function
         async function forceDownload() {
             const btn = document.getElementById('downloadBtn');
             btn.innerText = "Saving...";
@@ -234,7 +231,6 @@
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
             } catch (error) {
-                // अगर कभी प्रॉक्सी बिजी हो, तो नए टैब में ओपन कर दो (यूजर वहां से 1 सेकंड में सेव कर लेगा)
                 window.open(targetImgUrl, '_blank');
             } finally {
                 btn.innerText = "Save to Gallery";
