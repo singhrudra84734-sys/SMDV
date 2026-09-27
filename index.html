@@ -35,7 +35,7 @@
             position: relative;
         }
 
-        /* Background Glow */
+        /* Cyberpunk Background Glow */
         body::before {
             content: "";
             position: absolute;
@@ -155,6 +155,19 @@
             transform: scale(0.98);
         }
 
+        /* Result Display Box */
+        .result-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 255, 135, 0.05);
+            border: 1px solid var(--lime-neon);
+            border-radius: 14px;
+            font-size: 0.95rem;
+            color: var(--lime-neon);
+            animation: cyberpunkFade 0.4s ease;
+        }
+
         .grid-card {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -230,18 +243,23 @@
 
     <div class="container">
         
+        <!-- BRAND LOGO -->
         <div class="logo-area">
             SM<span>DV</span>
         </div>
 
+        <!-- MAIN DOWNLOADER CARD -->
         <div class="main-card">
             <h1>Premium Video Downloader</h1>
             <p class="subtitle">Download cinematic HD content from social media platforms instantly with zero buffers.</p>
             
             <div class="input-group">
-                <input type="text" placeholder="Paste your video URL link here...">
-                <button>Fetch Video</button>
+                <input type="text" id="videoLink" placeholder="Paste your video URL link here...">
+                <button onclick="downloadVideo()">Fetch Video</button>
             </div>
+            
+            <!-- JavaScript Triggered Status Box -->
+            <div id="resultStatus" class="result-box"></div>
         </div>
 
         <!-- 1st AD PLACEMENT: 320x50 MOBILE BANNER -->
@@ -255,17 +273,16 @@
                 'params' : {}
               };
             </script>
-            <script src="https://www.highrevenueformat.com/23898e2a0db96390e171333f673db484/invoke.js"></script>
+            <script src="https://highrevenueformat.com"></script>
         </div>
 
+        <!-- MINIMALIST SUPPORTED PLATFORMS GRID -->
         <div class="grid-card">
             <h2>SUPPORTED NETWORKS</h2>
             <div class="platform-grid">
-                <div class="platform-grid">
-                    <div class="platform-item"><span>📺</span>YouTube</div>
-                    <div class="platform-item"><span>📸</span>Instagram</div>
-                    <div class="platform-item"><span>🎵</span>TikTok</div>
-                </div>
+                <div class="platform-item"><span>📺</span>YouTube</div>
+                <div class="platform-item"><span>📸</span>Instagram</div>
+                <div class="platform-item"><span>🎵</span>TikTok</div>
             </div>
         </div>
 
@@ -280,10 +297,19 @@
                 'params' : {}
               };
             </script>
-            <script src="https://www.highrevenueformat.com/c32dd45d144531ffa6d8ef8549b1a33f/invoke.js"></script>
+            <script src="https://highrevenueformat.com"></script>
         </div>
 
     </div>
 
-</body>
-</html>
+    <!-- BACKEND DOWNLOADING FUNCTIONALITY SCRIPT -->
+    <script>
+        function downloadVideo() {
+            var urlInput = document.getElementById("videoLink").value.trim();
+            var statusBox = document.getElementById("resultStatus");
+            
+            if (urlInput === "") {
+                statusBox.style.display = "block";
+                statusBox.style.color = "#ff4a4a";
+                statusBox.style.borderColor = "#ff4a4a";
+        
