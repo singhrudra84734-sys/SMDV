@@ -145,7 +145,7 @@
 
         <div class="card">
             <h1>YT Thumbnail Downloader</h1>
-            <p>यहाँ लिंक पेस्ट करें और बिना किसी एरर के डायरेक्ट HD थंबनेल गैलरी में सेव करें।</p>
+            <p>यहाँ लिंक पेस्ट करें और सीधे अपनी गैलरी में सेव करें।</p>
 
             <div class="input-group">
                 <input type="text" id="videoUrl" placeholder="Paste your YouTube video URL link here...">
@@ -167,7 +167,7 @@
     <script>
         let currentVideoId = "";
 
-        // Fixed YouTube ID Detector Function
+        // बिल्कुल परफेक्ट काम करने वाला ID डिटेक्टर
         function getYouTubeId(url) {
             url = url.trim();
             if (url.length === 11 && !url.includes("/") && !url.includes(".")) {
@@ -176,7 +176,7 @@
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|shorts\/|live\/|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
             
-            // Fix: केवल पूरा मैच नहीं, बल्कि ID ग्रुप (match[2]) को रिटर्न करना है
+            // यहाँ गड़बड़ थी, अब सही ग्रुप [2] से वीडियो ID निकाली जा रही है
             return (match && match[2].length === 11) ? match[2] : null;
         }
 
@@ -206,7 +206,7 @@
             }
         }
 
-        // Fixed Direct Download Function
+        // डाउनलोड फंक्शन बिना किसी ब्लॉकिंग एरर के
         async function forceDownload() {
             const btn = document.getElementById('downloadBtn');
             btn.innerText = "Saving...";
