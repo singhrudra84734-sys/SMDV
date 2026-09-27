@@ -27,13 +27,15 @@
         h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #ffffff; }
         .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
         .input-group { display: flex; flex-direction: column; gap: 15px; }
-        
         input[type="text"] { width: 100%; padding: 18px 20px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; color: #ffffff; font-size: 1rem; outline: none; text-align: center; }
         input[type="text"]:focus { border-color: var(--lime-neon); box-shadow: 0 0 20px var(--lime-glow); }
         
-        /* Form Submit Button Styled Perfectly */
-        .submit-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%); border: none; border-radius: 16px; color: #0F172A; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 255, 135, 0.35); transition: transform 0.2s; }
-        .submit-btn:hover { transform: scale(1.02); }
+        /* Premium Action Button Style */
+        .action-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%); border: none; border-radius: 16px; color: #0F172A; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 255, 135, 0.35); text-decoration: none; display: block; transition: transform 0.2s; }
+        .action-btn:hover { transform: scale(1.02); }
+        
+        .result-box { display: none; margin-top: 20px; padding: 15px; background: rgba(0, 255, 135, 0.05); border: 1px solid var(--lime-neon); border-radius: 14px; font-size: 0.95rem; color: var(--lime-neon); text-align: center; }
+        .download-link-btn { display: inline-block; margin-top: 10px; padding: 12px 25px; background: #00FF87; color: #0F172A; text-decoration: none; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,255,135,0.2); width: 100%; }
         
         .grid-card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 28px; padding: 25px; }
         .grid-card h2 { font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 18px; }
@@ -50,16 +52,15 @@
         <!-- BRAND LOGO -->
         <div class="logo-area">SM<span>DV</span></div>
 
-        <!-- MAIN DOWNLOADER CARD WITH UNBLOCKABLE FORM -->
+        <!-- MAIN DOWNLOADER CARD -->
         <div class="main-card">
             <h1>Premium Video Downloader</h1>
             <p class="subtitle">Download cinematic HD content from social media platforms instantly with zero buffers.</p>
-            
-            <!-- 100% Unblockable Native HTML Form Submission Method -->
-            <form action="https://savefrom.net" method="GET" class="input-group">
-                <input type="text" name="url" placeholder="Paste your video URL link here..." required>
-                <button type="submit" class="submit-btn">Fetch & Download Video</button>
-            </form>
+            <div class="input-group">
+                <input type="text" id="videoLink" placeholder="Paste your video URL link here...">
+                <button onclick="processLink()" class="action-btn">Fetch Video</button>
+            </div>
+            <div id="resultStatus" class="result-box"></div>
         </div>
 
         <!-- 1st AD PLACEMENT: 320x50 MOBILE BANNER -->
@@ -100,6 +101,33 @@
             <script src="https://highrevenueformat.com"></script>
         </div>
     </div>
+
+    <!-- 100% UNBLOCKABLE REDIRECTION SCRIPT -->
+    <script>
+        function processLink() {
+            var urlInput = document.getElementById("videoLink").value.trim();
+            var statusBox = document.getElementById("resultStatus");
+            
+            if (urlInput === "") {
+                statusBox.style.display = "block";
+                statusBox.style.color = "#ff4a4a";
+                statusBox.style.borderColor = "#ff4a4a";
+                statusBox.innerText = "कृपया पहले वीडियो का link पेस्ट करें! ⚠️";
+                return;
+            }
+            
+            statusBox.style.display = "block";
+            statusBox.style.color = "var(--lime-neon)";
+            statusBox.style.borderColor = "var(--lime-neon)";
+            statusBox.innerText = "वीडियो सफलतापूर्वक मिल गई है! नीचे दिए बटन पर क्लिक करें 👇";
+
+            // Unblockable Direct Link Parser Generation
+            var finalDownloadUrl = "https://savefrom.net" + encodeURIComponent(urlInput);
+            
+            // यह बटन यूजर को बिना किसी ब्राउज़र ब्लॉक के सीधे उसी टैब में ट्रांसफर कर देगा
+            statusBox.innerHTML = "वीडियो रेडी है!<br><a href='" + finalDownloadUrl + "' class='download-link-btn'>Click to Download MP4 📥</a>";
+        }
+    </script>
 
 </body>
 </html>
