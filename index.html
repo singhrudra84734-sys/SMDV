@@ -8,9 +8,9 @@
     <meta name="description" content="SMDV is the ultimate independent premium YouTube Thumbnail Downloader. Download high-quality YouTube video thumbnails in Full HD instantly for free.">
     <style>
         :root {
-            --bg-color: #0F172A; /* Deep Navy/Charcoal */
-            --card-bg: rgba(30, 41, 59, 0.5); /* Semi-transparent Glass */
-            --lime-neon: #00FF87; /* Electric Lime Green */
+            --bg-color: #0F172A; 
+            --card-bg: rgba(30, 41, 59, 0.5); 
+            --lime-neon: #00FF87; 
             --lime-glow: rgba(0, 255, 135, 0.25);
             --text-color: #F8FAFC;
             --text-muted: #94A3B8;
@@ -36,10 +36,11 @@
         button { width: 100%; padding: 18px; background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%); border: none; border-radius: 16px; color: #0F172A; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 255, 135, 0.35); transition: transform 0.2s; }
         button:hover { transform: scale(1.02); }
         
-        /* 100% Independent Preview and Download Box */
+        /* 100% Same Page Preview Box */
         .result-box { display: none; margin-top: 25px; padding: 20px; background: rgba(30, 41, 59, 0.7); border: 1px solid var(--lime-neon); border-radius: 20px; text-align: center; animation: cyberpunkFade 0.4s ease; }
         .result-box img { width: 100%; border-radius: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .download-btn { display: block; width: 100%; padding: 14px; background: #00FF87; color: #0F172A; text-decoration: none; font-weight: 700; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,255,135,0.2); text-align: center; font-size: 1rem; }
+        
+        .download-btn { display: block; width: 100%; padding: 14px; background: #00FF87; color: #0F172A; text-decoration: none; font-weight: 700; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,255,135,0.2); text-align: center; font-size: 1rem; cursor: pointer; border: none; }
         
         .grid-card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 28px; padding: 25px; }
         .grid-card h2 { font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 15px; }
@@ -66,11 +67,12 @@
                 <button onclick="getThumbnail()">Fetch Thumbnail</button>
             </div>
             
-            <!-- Completely Independent Result Area -->
+            <!-- Completely Independent Same Page Result Area -->
             <div id="thumbnailResult" class="result-box">
                 <p style="color: var(--lime-neon); margin-bottom: 10px; font-weight: 600;">Your Thumbnail is Ready!</p>
                 <img id="thumbPreview" src="" alt="Thumbnail Preview">
-                <a id="downloadLink" href="" download="thumbnail.jpg" class="download-btn">Download Full HD Image 📥</a>
+                <!-- Triggering Same Page Download via JS Blob -->
+                <button id="downloadBtn" onclick="triggerDownload()" class="download-btn">Download Full HD Image 📥</button>
             </div>
         </div>
 
@@ -78,7 +80,7 @@
         <div class="ad-container-slim">
             <script>
               atOptions = {
-                'key' : '23898e2a0db96390e171333f673code84',
+                'key' : '23898e2a0db96390e171333f673db484',
                 'format' : 'iframe',
                 'height' : 50,
                 'width' : 320,
@@ -93,7 +95,7 @@
             <h2>WHY USE SMDV?</h2>
             <ul class="features-list">
                 <li>100% Independent & Fast Local Processing</li>
-                <li>Download in Ultra HD (1080p) Resolution</li>
+                <li>Direct Same-Page Download Without Opening New Tabs</li>
                 <li>Completely Unblockable by Chrome and Mobile Browsers</li>
             </ul>
         </div>
@@ -109,17 +111,18 @@
                 'params' : {}
               };
             </script>
-            <script src="https://www.highrevenueformat.com/c32dd45d144531ffa6d8ef8549b1a33f/invoke.js"></script>
+            <script src="https://highrevenueformat.com"></script>
         </div>
     </div>
 
-    <!-- 100% INDEPENDENT JAVASCRIPT EXTRACTOR -->
+    <!-- 100% INDEPENDENT SAME-PAGE EXTRACTOR -->
     <script>
+        let globalThumbUrl = "";
+
         function getThumbnail() {
             var url = document.getElementById("videoUrl").value.trim();
             var resultBox = document.getElementById("thumbnailResult");
             var imgPreview = document.getElementById("thumbPreview");
-            var downBtn = document.getElementById("downloadLink");
             
             if(url === "") {
                 alert("कृपया पहले यूट्यूब वीडियो का लिंक डालें! ⚠️");
@@ -128,34 +131,50 @@
 
             var videoId = "";
             
-            // Extract Video ID from various YouTube URL formats
             if(url.indexOf("://youtube.com") !== -1) {
                 var urlParams = new URLSearchParams(url.substring(url.indexOf('?')));
                 videoId = urlParams.get('v');
             } else if(url.indexOf("youtu.be/") !== -1) {
-                videoId = url.split("youtu.be/")[1].split("?")[0];
+                var parts = url.split("youtu.be/");
+                if(parts[1]) videoId = parts[1].split("?")[0];
             } else if(url.indexOf("://youtube.com") !== -1) {
-                videoId = url.split("shorts/")[1].split("?")[0];
+                var parts = url.split("://youtube.com");
+                if(parts[1]) videoId = parts[1].split("?")[0];
             } else {
                 alert("अमान्य लिंक! कृपया सही यूट्यूब वीडियो या शॉर्ट्स का लिंक डालें। ❌");
                 return;
             }
 
             if(videoId && videoId.trim() !== "") {
-                // Direct Max Resolution Image Path (100% Independent)
-                var thumbUrl = "https://youtube.com" + videoId.trim() + "/maxresdefault.jpg";
+                // Use a secure reverse proxy to bypass browser CORS and allow true direct same-page downloads
+                globalThumbUrl = "https://weserv.nl" + videoId.trim() + "/maxresdefault.jpg";
                 
-                imgPreview.src = thumbUrl;
-                downBtn.href = thumbUrl;
-                downBtn.target = "_blank"; 
-                
+                imgPreview.src = globalThumbUrl;
                 resultBox.style.display = "block";
                 resultBox.scrollIntoView({ behavior: 'smooth' });
             } else {
                 alert("वीडियो आईडी ढूंढने में असमर्थ! कृपया लिंक दोबारा जांचें। ⚠️");
             }
         }
-    </script>
 
-</body>
-</html>
+        // 100% Same Page Force Download Handler
+        async function triggerDownload() {
+            var btn = document.getElementById("downloadBtn");
+            btn.innerText = "डाउनलोड हो रहा है... ⏳";
+            
+            try {
+                const response = await fetch(globalThumbUrl);
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = "youtube-thumbnail.jpg";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(blobUrl);
+                
+                btn.innerText = "Download Full HD Image 📥";
+            } catch (error) {
+        
