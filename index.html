@@ -47,8 +47,10 @@
 <body>
 
     <div class="container">
+        <!-- BRAND LOGO -->
         <div class="logo-area">SM<span>DV</span></div>
 
+        <!-- MAIN DOWNLOADER CARD -->
         <div class="main-card">
             <h1>Premium Video Downloader</h1>
             <p class="subtitle">Download cinematic HD content from social media platforms instantly with zero buffers.</p>
@@ -59,7 +61,7 @@
             <div id="resultStatus" class="result-box"></div>
         </div>
 
-        <!-- 1st AD PLACEMENT -->
+        <!-- 1st AD PLACEMENT: 320x50 MOBILE BANNER -->
         <div class="ad-container-slim">
             <script>
               atOptions = {
@@ -70,9 +72,10 @@
                 'params' : {}
               };
             </script>
-            <script src="https://www.highrevenueformat.com/23898e2a0db96390e171333f673db484/invoke.js"></script>
+            <script src="https://highrevenueformat.com"></script>
         </div>
 
+        <!-- MINIMALIST SUPPORTED PLATFORMS GRID -->
         <div class="grid-card">
             <h2>SUPPORTED NETWORKS</h2>
             <div class="platform-grid">
@@ -82,7 +85,7 @@
             </div>
         </div>
 
-        <!-- 2nd AD PLACEMENT -->
+        <!-- 2nd AD PLACEMENT: 300x250 RECTANGLE BOX -->
         <div class="ad-container-box">
             <script>
               atOptions = {
@@ -93,10 +96,11 @@
                 'params' : {}
               };
             </script>
-            <script src="https://www.highrevenueformat.com/c32dd45d144531ffa6d8ef8549b1a33f/invoke.js"></script>
+            <script src="https://highrevenueformat.com"></script>
         </div>
     </div>
 
+    <!-- BACKEND FUNCTIONALITY SCRIPT -->
     <script>
         function downloadVideo() {
             var urlInput = document.getElementById("videoLink").value.trim();
@@ -119,7 +123,7 @@
             var finalDownloadUrl = "https://savefrom.net" + cleanUrl;
             
             setTimeout(function() {
-                statusBox.innerHTML = "वीडियो सफलतापूर्वक मिल गई है!<br><a href='" + finalDownloadUrl + "' target='_blank' class='download-btn'>Click to Download MP4 📥</a>";
+                statusBox.innerHTML = "वीडियो सफलतापूर्वक मिल गई है!<br><a href='" + finalDownloadUrl + "' class='download-btn'>Click to Download MP4 📥</a>";
             }, 1500);
         }
     </script>
