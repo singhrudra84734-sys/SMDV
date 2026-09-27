@@ -155,10 +155,10 @@
             transform: scale(0.98);
         }
 
-        /* Result Display Box */
+        /* Result Status Box */
         .result-box {
             display: none;
-            margin-top: 15px;
+            margin-top: 20px;
             padding: 15px;
             background: rgba(0, 255, 135, 0.05);
             border: 1px solid var(--lime-neon);
@@ -166,6 +166,7 @@
             font-size: 0.95rem;
             color: var(--lime-neon);
             animation: cyberpunkFade 0.4s ease;
+            text-align: center;
         }
 
         .grid-card {
@@ -258,7 +259,7 @@
                 <button onclick="downloadVideo()">Fetch Video</button>
             </div>
             
-            <!-- JavaScript Triggered Status Box -->
+            <!-- JavaScript Status Box -->
             <div id="resultStatus" class="result-box"></div>
         </div>
 
@@ -273,7 +274,7 @@
                 'params' : {}
               };
             </script>
-            <script src="https://highrevenueformat.com"></script>
+            <script src="https://www.highrevenueformat.com/23898e2a0db96390e171333f673db484/invoke.js"></script>
         </div>
 
         <!-- MINIMALIST SUPPORTED PLATFORMS GRID -->
@@ -297,12 +298,12 @@
                 'params' : {}
               };
             </script>
-            <script src="https://highrevenueformat.com"></script>
+            <script src="https://www.highrevenueformat.com/c32dd45d144531ffa6d8ef8549b1a33f/invoke.js"></script>
         </div>
 
     </div>
 
-    <!-- BACKEND DOWNLOADING FUNCTIONALITY SCRIPT -->
+    <!-- BACKEND DOWNLOADING SCRIPT (NEW TAB METHOD) -->
     <script>
         function downloadVideo() {
             var urlInput = document.getElementById("videoLink").value.trim();
