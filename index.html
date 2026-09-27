@@ -145,7 +145,7 @@
 
         <div class="card">
             <h1>YT Thumbnail Downloader</h1>
-            <p>यहाँ लिंक पेस्ट करें और बिना किसी ब्लॉकिंग एरर के डायरेक्ट HD में सेव करें।</p>
+            <p>यहाँ लिंक पेस्ट करें और बिना किसी ब्लॉकिंग या यूआरएल एरर के डायरेक्ट HD में सेव करें।</p>
 
             <div class="input-group">
                 <input type="text" id="videoUrl" placeholder="Paste your YouTube video URL link here...">
@@ -167,67 +167,74 @@
     <script>
         let currentVideoId = "";
 
+        // ⚡ नया और एडवांस्ड यूट्यूब आईडी डिटेक्टर फंक्शन
+        function getYouTubeId(url) {
+            url = url.trim();
+            // 1. अगर यूजर ने सिर्फ 11 अंकों की डायरेक्ट आईडी डाल दी हो
+            if (url.length === 11 && !url.includes("/") && !url.includes(".")) {
+                return url;
+            }
+            // 2. हर तरह के यूट्यूब यूआरएल को पहचानने का तगड़ा फॉर्मूला
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|shorts\/|live\/|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
         function generateThumbnails() {
-            const videoUrl = document.getElementById('videoUrl').value.trim();
+            const videoUrl = document.getElementById('videoUrl').value;
             const errorMsg = document.getElementById('errorMsg');
             const resultArea = document.getElementById('resultArea');
 
             errorMsg.style.display = 'none';
             resultArea.style.display = 'none';
 
-            if (!videoUrl) {
+            if (!videoUrl.trim()) {
                 errorMsg.innerText = "कृपया पहले लिंक पेस्ट करें!";
                 errorMsg.style.display = 'block';
                 return;
             }
 
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = videoUrl.match(regExp);
+            // आईडी निकालने की कोशिश करें
+            const videoId = getYouTubeId(videoUrl);
 
-            if (match && match.length === 11) {
-                currentVideoId = match;
+            if (videoId) {
+                currentVideoId = videoId;
+                // प्रीव्यू लोड करें
+                document.getElementById('imgPreview').src = `https://youtube.com{currentVideoId}/maxresdefault.jpg`;
+                resultArea.style.display = 'block';
             } else {
-                errorMsg.innerText = "गलत YouTube URL! सही लिंक दर्ज करें।";
+                errorMsg.innerText = "गलत YouTube URL! कृपया सही लिंक दर्ज करें।";
                 errorMsg.style.display = 'block';
-                return;
             }
-
-            // प्रीव्यू के लिए डायरेक्ट यूट्यूब इमेज दिखाएं
-            document.getElementById('imgPreview').src = `https://youtube.com{currentVideoId}/maxresdefault.jpg`;
-            resultArea.style.display = 'block';
         }
 
-        // ⚡ ब्लॉकिंग बाईपास करने वाला सीक्रेट फंक्शन
+        // ⚡ ब्लॉकिंग बाईपास करने वाला प्रॉक्सी फंक्शन
         async function forceDownload() {
             const btn = document.getElementById('downloadBtn');
             btn.innerText = "Saving...";
             btn.style.opacity = "0.7";
 
-            // फ्री CORS प्रॉक्सी सर्वर जो ब्लॉकिंग को रोकता है
             const proxyUrl = "https://corsproxy.io?";
             const targetImgUrl = `https://youtube.com{currentVideoId}/maxresdefault.jpg`;
 
             try {
-                // इमेज को प्रॉक्सी के जरिए फेच करना (इससे ब्राउज़र ब्लॉक नहीं करेगा)
                 const response = await fetch(proxyUrl + encodeURIComponent(targetImgUrl));
-                if (!response.ok) throw new Error("Proxy failed");
+                if (!response.ok) throw new Error("Proxy error");
                 
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
                 
-                // लोकल डाउनलोड ट्रिगर करना
                 const a = document.createElement('a');
                 a.href = blobUrl;
                 a.download = `smdv-thumbnail-${currentVideoId}.jpg`;
                 document.body.appendChild(a);
                 a.click();
                 
-                // क्लीनअप
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
             } catch (error) {
-                console.log("CORS Proxy Failed, using alternative method...");
-                // फॉलबैक मेथड: अगर प्रॉक्सी काम न करे तो इमेज को नए टैब में खोलें ताकि यूजर दबाकर सेव कर सके
+                // अगर कभी प्रॉक्सी बिजी हो, तो नए टैब में ओपन कर दो (यूजर वहां से 1 सेकंड में सेव कर लेगा)
                 window.open(targetImgUrl, '_blank');
             } finally {
                 btn.innerText = "Save to Gallery";
