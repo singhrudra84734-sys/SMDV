@@ -23,7 +23,6 @@
             padding: 20px;
         }
 
-        /* Container & Main Card */
         .wrapper {
             width: 100%;
             max-width: 450px;
@@ -38,7 +37,7 @@
         }
 
         .logo span {
-            color: #00ff87; /* Green highlight matching your app */
+            color: #00ff87;
         }
 
         .card {
@@ -63,10 +62,10 @@
             line-height: 1.5;
         }
 
-        /* Input Box */
         .input-group {
             width: 100%;
             margin-bottom: 20px;
+            position: relative;
         }
 
         input[type="text"] {
@@ -89,7 +88,6 @@
             color: #484f58;
         }
 
-        /* Gradient Button */
         .btn-fetch {
             width: 100%;
             padding: 16px;
@@ -125,21 +123,22 @@
         }
 
         .btn-download {
-            display: inline-block;
+            display: block;
             width: 100%;
-            padding: 12px;
-            background: #21262d;
-            border: 1px solid #30363d;
-            color: #ffffff;
-            border-radius: 10px;
+            padding: 14px;
+            background: #00ff87;
+            border: none;
+            color: #000000;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: background 0.3s;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
         }
 
         .btn-download:hover {
-            background: #30363d;
+            opacity: 0.9;
         }
 
         .error-msg {
@@ -153,38 +152,37 @@
 <body>
 
     <div class="wrapper">
-        <!-- Logo Area -->
         <div class="logo">SM<span>DV</span></div>
 
-        <!-- Main Card Area -->
         <div class="card">
-            <h1>Premium Thumbnail Downloader</h1>
-            <p>Download high-quality YouTube video thumbnails instantly with zero hassle.</p>
+            <h1>YT Thumbnail Downloader</h1>
+            <p>लिंक डालें और सीधे अपनी गैलरी या कंप्यूटर में HD थंबनेल डाउनलोड करें।</p>
 
             <div class="input-group">
                 <input type="text" id="videoUrl" placeholder="Paste your YouTube video URL link here...">
-                <div class="error-msg" id="errorMsg">कृपया एक सही YouTube URL दर्ज करें!</div>
+                <div class="error-msg" id="errorMsg"></div>
             </div>
 
-            <button class="btn-fetch" onclick="fetchThumbnail()">Fetch Thumbnail</button>
+            <button class="btn-fetch" id="fetchBtn" onclick="fetchThumbnail()">Fetch Thumbnail</button>
 
             <!-- Result Section -->
             <div class="result-area" id="resultArea">
                 <img src="" alt="Thumbnail Preview" class="thumbnail-preview" id="thumbPreview">
-                <a href="" download="thumbnail.jpg" target="_blank" class="btn-download" id="downloadBtn">Download HD Thumbnail</a>
+                <button class="btn-download" id="downloadBtn">Download to Device</button>
             </div>
         </div>
     </div>
 
     <script>
-        function fetchThumbnail() {
+        async function fetchThumbnail() {
             const videoUrl = document.getElementById('videoUrl').value.trim();
             const errorMsg = document.getElementById('errorMsg');
             const resultArea = document.getElementById('resultArea');
             const thumbPreview = document.getElementById('thumbPreview');
             const downloadBtn = document.getElementById('downloadBtn');
+            const fetchBtn = document.getElementById('fetchBtn');
 
-            // Reset status
+            // Reset UI
             errorMsg.style.display = 'none';
             resultArea.style.display = 'none';
 
@@ -195,8 +193,6 @@
             }
 
             let videoId = "";
-
-            // YouTube URL से Video ID निकालने के लिए Regex
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = videoUrl.match(regExp);
 
@@ -208,15 +204,44 @@
                 return;
             }
 
-            // Max Resolution Thumbnail URL
+            // Max Resolution Thumbnail (Proxy to bypass CORS if needed)
             const thumbnailUrl = `https://youtube.com{videoId}/maxresdefault.jpg`;
-
-            // Preview और Download Link सेट करना
+            
+            // Preview दिखाना
             thumbPreview.src = thumbnailUrl;
-            downloadBtn.href = thumbnailUrl;
-
-            // रिजल्ट एरिया दिखाना
             resultArea.style.display = 'block';
+
+            // डायरेक्ट डाउनलोड लॉजिक (नो रीडायरेक्ट)
+            downloadBtn.onclick = async function() {
+                downloadBtn.innerText = "Downloading...";
+                downloadBtn.style.opacity = "0.7";
+                
+                try {
+                    // इमेज को फेच करके Blob में बदलना
+                    const response = await fetch(thumbnailUrl);
+                    const blob = await response.blob();
+                    
+                    // लोकल डाउनलोड लिंक बनाना
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = blobUrl;
+                    a.download = `smdv-thumbnail-${videoId}.jpg`;
+                    
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    // क्लीनअप
+                    window.URL.revokeObjectURL(blobUrl);
+                    document.body.removeChild(a);
+                } catch (error) {
+                    // अगर CORS इशू आये तो बैकअप के तौर पर नए टैब में ओपन करना
+                    window.open(thumbnailUrl, '_blank');
+                } finally {
+                    downloadBtn.innerText = "Download to Device";
+                    downloadBtn.style.opacity = "1";
+                }
+            };
         }
     </script>
 </body>
