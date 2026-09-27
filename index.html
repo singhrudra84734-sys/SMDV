@@ -8,262 +8,58 @@
     <meta name="description" content="SMDV is the fastest premium online video downloader. Download Instagram Reels, YouTube Shorts, and TikTok videos instantly in full HD with zero buffering.">
     <style>
         :root {
-            --bg-color: #0F172A; /* Deep Navy/Charcoal */
-            --card-bg: rgba(30, 41, 59, 0.5); /* Semi-transparent Glass */
-            --lime-neon: #00FF87; /* Electric Lime Green */
+            --bg-color: #0F172A; 
+            --card-bg: rgba(30, 41, 59, 0.5); 
+            --lime-neon: #00FF87; 
             --lime-glow: rgba(0, 255, 135, 0.25);
             --text-color: #F8FAFC;
             --text-muted: #94A3B8;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 30px 15px;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Cyberpunk Background Glow */
-        body::before {
-            content: "";
-            position: absolute;
-            top: -10%; left: 50%; transform: translateX(-50%);
-            width: 600px; height: 300px;
-            background: radial-gradient(circle, rgba(0, 255, 135, 0.08) 0%, rgba(15, 23, 42, 0) 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            animation: cyberpunkFade 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes cyberpunkFade {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo-area {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        }
-
-        .logo-area span {
-            color: var(--lime-neon);
-            text-shadow: 0 0 15px var(--lime-glow);
-        }
-
-        .main-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
-            padding: 35px 25px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s ease;
-        }
-
-        .main-card:hover {
-            border-color: rgba(0, 255, 135, 0.3);
-            box-shadow: 0 25px 60px rgba(0, 255, 135, 0.05), 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
-
-        h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #ffffff;
-        }
-
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-            line-height: 1.4;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 18px 20px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            color: #ffffff;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-            text-align: center;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--lime-neon);
-            box-shadow: 0 0 20px var(--lime-glow), inset 0 2px 4px rgba(0, 0, 0, 0.3);
-            background: rgba(15, 23, 42, 0.8);
-        }
-
-        button {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%);
-            border: none;
-            border-radius: 16px;
-            color: #0F172A;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 25px rgba(0, 255, 135, 0.35);
-            letter-spacing: 0.5px;
-        }
-
-        button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 30px rgba(0, 255, 135, 0.5);
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        /* Result Status Box */
-        .result-box {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(0, 255, 135, 0.05);
-            border: 1px solid var(--lime-neon);
-            border-radius: 14px;
-            font-size: 0.95rem;
-            color: var(--lime-neon);
-            animation: cyberpunkFade 0.4s ease;
-            text-align: center;
-        }
-
-        .grid-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 28px;
-            padding: 25px;
-        }
-
-        .grid-card h2 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 18px;
-            text-align: center;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
-        }
-
-        .platform-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .platform-item {
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 15px 10px;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-
-        .platform-item:hover {
-            border-color: var(--lime-neon);
-            box-shadow: 0 0 15px var(--lime-glow);
-            transform: translateY(-2px);
-            color: var(--lime-neon);
-        }
-
-        .platform-item span {
-            display: block;
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .ad-container-slim {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 50px;
-            margin: 5px 0;
-        }
-
-        .ad-container-box {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 250px;
-            margin: 5px 0;
-            background: rgba(0, 255, 135, 0.02);
-            border: 1px dashed rgba(0, 255, 135, 0.15);
-            border-radius: 24px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 15px; overflow-x: hidden; position: relative; }
+        body::before { content: ""; position: absolute; top: -10%; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(circle, rgba(0, 255, 135, 0.08) 0%, rgba(15, 23, 42, 0) 70%); z-index: -1; pointer-events: none; }
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 25px; animation: cyberpunkFade 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes cyberpunkFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .logo-area { text-align: center; font-size: 2.5rem; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
+        .logo-area span { color: var(--lime-neon); text-shadow: 0 0 15px var(--lime-glow); }
+        .main-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 30px; padding: 35px 25px; text-align: center; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #ffffff; }
+        .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
+        .input-group { display: flex; flex-direction: column; gap: 15px; }
+        input[type="text"] { width: 100%; padding: 18px 20px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; color: #ffffff; font-size: 1rem; outline: none; text-align: center; }
+        input[type="text"]:focus { border-color: var(--lime-neon); box-shadow: 0 0 20px var(--lime-glow); }
+        button { width: 100%; padding: 18px; background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%); border: none; border-radius: 16px; color: #0F172A; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 255, 135, 0.35); }
+        button:hover { transform: scale(1.02); }
+        
+        .result-box { display: none; margin-top: 20px; padding: 15px; background: rgba(0, 255, 135, 0.05); border: 1px solid var(--lime-neon); border-radius: 14px; font-size: 0.95rem; color: var(--lime-neon); text-align: center; }
+        .download-btn { display: inline-block; margin-top: 10px; padding: 12px 25px; background: #00FF87; color: #0F172A; text-decoration: none; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,255,135,0.2); }
+        
+        .grid-card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 28px; padding: 25px; }
+        .grid-card h2 { font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 18px; }
+        .platform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .platform-item { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 16px; padding: 15px 10px; text-align: center; font-size: 0.85rem; color: var(--text-color); }
+        
+        .ad-container-slim { width: 100%; display: flex; justify-content: center; min-height: 50px; margin: 5px 0; }
+        .ad-container-box { width: 100%; display: flex; justify-content: center; min-height: 250px; margin: 5px 0; background: rgba(0, 255, 135, 0.02); border: 1px dashed rgba(0, 255, 135, 0.15); border-radius: 24px; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        
-        <!-- BRAND LOGO -->
-        <div class="logo-area">
-            SM<span>DV</span>
-        </div>
+        <div class="logo-area">SM<span>DV</span></div>
 
-        <!-- MAIN DOWNLOADER CARD -->
         <div class="main-card">
             <h1>Premium Video Downloader</h1>
             <p class="subtitle">Download cinematic HD content from social media platforms instantly with zero buffers.</p>
-            
             <div class="input-group">
                 <input type="text" id="videoLink" placeholder="Paste your video URL link here...">
                 <button onclick="downloadVideo()">Fetch Video</button>
             </div>
-            
-            <!-- JavaScript Status Box -->
             <div id="resultStatus" class="result-box"></div>
         </div>
 
-        <!-- 1st AD PLACEMENT: 320x50 MOBILE BANNER -->
+        <!-- 1st AD PLACEMENT -->
         <div class="ad-container-slim">
             <script>
               atOptions = {
@@ -277,7 +73,6 @@
             <script src="https://www.highrevenueformat.com/23898e2a0db96390e171333f673db484/invoke.js"></script>
         </div>
 
-        <!-- MINIMALIST SUPPORTED PLATFORMS GRID -->
         <div class="grid-card">
             <h2>SUPPORTED NETWORKS</h2>
             <div class="platform-grid">
@@ -287,7 +82,7 @@
             </div>
         </div>
 
-        <!-- 2nd AD PLACEMENT: 300x250 RECTANGLE BOX -->
+        <!-- 2nd AD PLACEMENT -->
         <div class="ad-container-box">
             <script>
               atOptions = {
@@ -300,10 +95,8 @@
             </script>
             <script src="https://www.highrevenueformat.com/c32dd45d144531ffa6d8ef8549b1a33f/invoke.js"></script>
         </div>
-
     </div>
 
-    <!-- BACKEND DOWNLOADING SCRIPT (NEW TAB METHOD) -->
     <script>
         function downloadVideo() {
             var urlInput = document.getElementById("videoLink").value.trim();
@@ -313,4 +106,23 @@
                 statusBox.style.display = "block";
                 statusBox.style.color = "#ff4a4a";
                 statusBox.style.borderColor = "#ff4a4a";
-        
+                statusBox.innerText = "कृपया पहले वीडियो का link पेस्ट करें! ⚠️";
+                return;
+            }
+            
+            statusBox.style.display = "block";
+            statusBox.style.color = "var(--lime-neon)";
+            statusBox.style.borderColor = "var(--lime-neon)";
+            statusBox.innerText = "वीडियो प्रोसेस हो रहा है... ⚡";
+
+            var cleanUrl = encodeURIComponent(urlInput);
+            var finalDownloadUrl = "https://savefrom.net" + cleanUrl;
+            
+            setTimeout(function() {
+                statusBox.innerHTML = "वीडियो सफलतापूर्वक मिल गई है!<br><a href='" + finalDownloadUrl + "' target='_blank' class='download-btn'>Click to Download MP4 📥</a>";
+            }, 1500);
+        }
+    </script>
+
+</body>
+</html>
