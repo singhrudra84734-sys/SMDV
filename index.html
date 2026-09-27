@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMDV - Premium QR Code Generator</title>
-    <!-- QR Code Library for generating QR Easily -->
-    <script src="https://cloudflare.com"></script>
+    <title>SMDV - Ultimate Thumbnail Downloader</title>
     <style>
         * {
             margin: 0;
@@ -26,7 +24,7 @@
 
         .wrapper {
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             text-align: center;
         }
 
@@ -66,25 +64,23 @@
             margin-bottom: 20px;
         }
 
-        textarea {
+        input[type="text"] {
             width: 100%;
-            height: 100px;
-            padding: 15px;
+            padding: 16px 20px;
             background: #0d1117;
             border: 1px solid #30363d;
             border-radius: 14px;
             color: #ffffff;
             font-size: 0.95rem;
             outline: none;
-            resize: none;
             transition: border-color 0.3s;
         }
 
-        textarea:focus {
+        input[type="text"]:focus {
             border-color: #00ff87;
         }
 
-        .btn-generate {
+        .btn-fetch {
             width: 100%;
             padding: 16px;
             background: linear-gradient(135deg, #00ff87 0%, #60efff 100%);
@@ -97,42 +93,48 @@
             transition: opacity 0.3s, transform 0.1s;
         }
 
-        .btn-generate:hover { opacity: 0.9; }
+        .btn-fetch:hover { opacity: 0.9; }
 
-        /* QR Display Area */
+        .error-msg {
+            color: #ff7b72;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+
         .result-area {
             margin-top: 30px;
             display: none;
         }
 
-        #qrcode {
-            background: #ffffff;
-            padding: 15px;
+        .thumb-box {
+            background: #21262d;
+            border: 1px solid #30363d;
             border-radius: 14px;
-            display: inline-block;
-            margin-bottom: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        #qrcode img {
-            margin: 0 auto;
+        .thumb-box img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            aspect-ratio: 16/9;
+            object-fit: cover;
         }
 
         .btn-download {
             display: block;
             width: 100%;
-            padding: 14px;
-            background: #21262d;
-            border: 1px solid #30363d;
-            color: #ffffff;
-            border-radius: 12px;
-            text-decoration: none;
+            padding: 12px;
+            background: #00ff87;
+            border: none;
+            color: #000000;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
-        }
-
-        .btn-download:hover {
-            background: #30363d;
         }
     </style>
 </head>
@@ -142,71 +144,94 @@
         <div class="logo">SM<span>DV</span></div>
 
         <div class="card">
-            <h1>Premium QR Generator</h1>
-            <p>कोई भी टेक्स्ट या वेबसाइट लिंक डालें और तुरंत अपना QR कोड डाउनलोड करें।</p>
+            <h1>YT Thumbnail Downloader</h1>
+            <p>यहाँ लिंक पेस्ट करें और बिना किसी ब्लॉकिंग एरर के डायरेक्ट HD में सेव करें।</p>
 
             <div class="input-group">
-                <textarea id="qrText" placeholder="यहाँ अपना लिंक या टेक्स्ट पेस्ट करें..."></textarea>
+                <input type="text" id="videoUrl" placeholder="Paste your YouTube video URL link here...">
+                <div class="error-msg" id="errorMsg"></div>
             </div>
 
-            <button class="btn-generate" onclick="generateQR()">Generate QR Code</button>
+            <button class="btn-fetch" onclick="generateThumbnails()">Fetch Thumbnail</button>
 
-            <!-- Result Section -->
+            <!-- Results Box -->
             <div class="result-area" id="resultArea">
-                <div id="qrcode"></div>
-                <button class="btn-download" onclick="downloadQR()">Download QR Code</button>
+                <div class="thumb-box">
+                    <img id="imgPreview" src="" alt="Preview">
+                    <button class="btn-download" id="downloadBtn" onclick="forceDownload()">Save to Gallery</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        let qrcodeContainer = document.getElementById("qrcode");
-        let qrCodeInstance = null;
+        let currentVideoId = "";
 
-        function generateQR() {
-            let qrText = document.getElementById("qrText").value.trim();
-            let resultArea = document.getElementById("resultArea");
+        function generateThumbnails() {
+            const videoUrl = document.getElementById('videoUrl').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const resultArea = document.getElementById('resultArea');
 
-            if (!qrText) {
-                alert("कृपया पहले कुछ टेक्स्ट या लिंक दर्ज करें!");
+            errorMsg.style.display = 'none';
+            resultArea.style.display = 'none';
+
+            if (!videoUrl) {
+                errorMsg.innerText = "कृपया पहले लिंक पेस्ट करें!";
+                errorMsg.style.display = 'block';
                 return;
             }
 
-            // पुराना QR साफ़ करना
-            qrcodeContainer.innerHTML = "";
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = videoUrl.match(regExp);
 
-            // नया QR जनरेट करना
-            qrCodeInstance = new QRCode(qrcodeContainer, {
-                text: qrText,
-                width: 200,
-                height: 200,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
+            if (match && match.length === 11) {
+                currentVideoId = match;
+            } else {
+                errorMsg.innerText = "गलत YouTube URL! सही लिंक दर्ज करें।";
+                errorMsg.style.display = 'block';
+                return;
+            }
 
-            resultArea.style.display = "block";
+            // प्रीव्यू के लिए डायरेक्ट यूट्यूब इमेज दिखाएं
+            document.getElementById('imgPreview').src = `https://youtube.com{currentVideoId}/maxresdefault.jpg`;
+            resultArea.style.display = 'block';
         }
 
-        function downloadQR() {
-            // QR इमेज को खोजकर उसे डाउनलोड करना
-            let qrImg = qrcodeContainer.querySelector("img");
-            if (qrImg) {
-                let a = document.createElement("a");
-                a.href = qrImg.src;
-                a.download = "smdv-qrcode.png";
+        // ⚡ ब्लॉकिंग बाईपास करने वाला सीक्रेट फंक्शन
+        async function forceDownload() {
+            const btn = document.getElementById('downloadBtn');
+            btn.innerText = "Saving...";
+            btn.style.opacity = "0.7";
+
+            // फ्री CORS प्रॉक्सी सर्वर जो ब्लॉकिंग को रोकता है
+            const proxyUrl = "https://corsproxy.io?";
+            const targetImgUrl = `https://youtube.com{currentVideoId}/maxresdefault.jpg`;
+
+            try {
+                // इमेज को प्रॉक्सी के जरिए फेच करना (इससे ब्राउज़र ब्लॉक नहीं करेगा)
+                const response = await fetch(proxyUrl + encodeURIComponent(targetImgUrl));
+                if (!response.ok) throw new Error("Proxy failed");
+                
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                // लोकल डाउनलोड ट्रिगर करना
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = `smdv-thumbnail-${currentVideoId}.jpg`;
                 document.body.appendChild(a);
                 a.click();
+                
+                // क्लीनअप
+                window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
-            } else {
-                // Canvas फॉलबैक अगर इमेज तुरंत लोड न हो
-                let qrCanvas = qrcodeContainer.querySelector("canvas");
-                let a = document.createElement("a");
-                a.href = qrCanvas.toDataURL("image/png");
-                a.download = "smdv-qrcode.png";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+            } catch (error) {
+                console.log("CORS Proxy Failed, using alternative method...");
+                // फॉलबैक मेथड: अगर प्रॉक्सी काम न करे तो इमेज को नए टैब में खोलें ताकि यूजर दबाकर सेव कर सके
+                window.open(targetImgUrl, '_blank');
+            } finally {
+                btn.innerText = "Save to Gallery";
+                btn.style.opacity = "1";
             }
         }
     </script>
