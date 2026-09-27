@@ -3,99 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Video Downloader</title>
+    <title>SMDV - Premium YouTube Thumbnail Downloader</title>
+    <!-- SEO Meta Description -->
+    <meta name="description" content="SMDV is the ultimate independent premium YouTube Thumbnail Downloader. Download high-quality YouTube video thumbnails in Full HD instantly for free.">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #121212; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .container { background: #1e1e1e; padding: 30px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); width: 100%; max-width: 500px; text-align: center; }
-        h1 { margin-bottom: 20px; color: #ff4757; font-size: 24px; }
-        p { color: #aaa; margin-bottom: 20px; font-size: 14px; }
-        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #333; background: #2a2a2a; color: #fff; border-radius: 6px; margin-bottom: 15px; outline: none; font-size: 16px; }
-        input[type="text"]:focus { border-color: #ff4757; }
-        button { width: 100%; padding: 12px; background: #ff4757; border: none; color: #fff; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #e84118; }
-        .loader { display: none; margin: 20px auto; border: 4px solid #f3f3f3; border-top: 4px solid #ff4757; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .result { margin-top: 25px; display: none; background: #2a2a2a; padding: 15px; border-radius: 8px; }
-        .result img { max-width: 100%; border-radius: 6px; margin-bottom: 10px; }
-        .download-btn { display: inline-block; background: #2ed573; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; }
-        .download-btn:hover { background: #26af5f; }
-        .error { color: #ff4757; margin-top: 15px; font-size: 14px; display: none; }
+        :root {
+            --bg-color: #0F172A; /* Deep Navy/Charcoal */
+            --card-bg: rgba(30, 41, 59, 0.5); /* Semi-transparent Glass */
+            --lime-neon: #00FF87; /* Electric Lime Green */
+            --lime-glow: rgba(0, 255, 135, 0.25);
+            --text-color: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 30px 15px; overflow-x: hidden; position: relative; }
+        body::before { content: ""; position: absolute; top: -10%; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(circle, rgba(0, 255, 135, 0.08) 0%, rgba(15, 23, 42, 0) 70%); z-index: -1; pointer-events: none; }
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 25px; animation: cyberpunkFade 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes cyberpunkFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .logo-area { text-align: center; font-size: 2.5rem; font-weight: 900; letter-spacing: 2px; color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
+        .logo-area span { color: var(--lime-neon); text-shadow: 0 0 15px var(--lime-glow); }
+        
+        .main-card { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 30px; padding: 35px 25px; text-align: center; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+        h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #ffffff; }
+        .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
+        .input-group { display: flex; flex-direction: column; gap: 15px; }
+        
+        input[type="text"] { width: 100%; padding: 18px 20px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; color: #ffffff; font-size: 1rem; outline: none; text-align: center; }
+        input[type="text"]:focus { border-color: var(--lime-neon); box-shadow: 0 0 20px var(--lime-glow); }
+        
+        button { width: 100%; padding: 18px; background: linear-gradient(135deg, #00FF87 0%, #60EFFF 100%); border: none; border-radius: 16px; color: #0F172A; font-size: 1.1rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 25px rgba(0, 255, 135, 0.35); transition: transform 0.2s; }
+        button:hover { transform: scale(1.02); }
+        
+        /* 100% Independent Preview and Download Box */
+        .result-box { display: none; margin-top: 25px; padding: 20px; background: rgba(30, 41, 59, 0.7); border: 1px solid var(--lime-neon); border-radius: 20px; text-align: center; animation: cyberpunkFade 0.4s ease; }
+        .result-box img { width: 100%; border-radius: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .download-btn { display: block; width: 100%; padding: 14px; background: #00FF87; color: #0F172A; text-decoration: none; font-weight: 700; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,255,135,0.2); text-align: center; font-size: 1rem; }
+        
+        .grid-card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 28px; padding: 25px; }
+        .grid-card h2 { font-size: 1.1rem; text-align: center; color: var(--text-muted); margin-bottom: 15px; }
+        .features-list { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; color: var(--text-muted); text-align: left; }
+        .features-list li::before { content: "⚡ "; color: var(--lime-neon); }
+
+        .ad-container-slim { width: 100%; display: flex; justify-content: center; min-height: 50px; margin: 5px 0; }
+        .ad-container-box { width: 100%; display: flex; justify-content: center; min-height: 250px; margin: 5px 0; background: rgba(0, 255, 135, 0.02); border: 1px dashed rgba(0, 255, 135, 0.15); border-radius: 24px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🎬 Online Video Downloader</h1>
-    <p>YouTube, Facebook, Twitter ya Instagram video ka link niche paste karein:</p>
-    
-    <input type="text" id="videoUrl" placeholder="https://youtube.com...">
-    <button onclick="fetchVideo()">Download Link Generate Karein</button>
-    
-    <div class="loader" id="loader"></div>
-    <div class="error" id="errorMsg">Kuch galat hua! Kripya sahi URL dalein ya thodi der baad koshish karein.</div>
-    
-    <div class="result" id="resultBox">
-        <h3 id="videoTitle" style="font-size: 16px; margin-bottom: 10px;">Video Title</h3>
-        <img id="videoThumb" src="" alt="Thumbnail">
-        <br>
-        <a id="downloadLink" class="download-btn" href="#" target="_blank" download>💾 Video Download Karein</a>
-    </div>
-</div>
+    <div class="container">
+        <!-- BRAND LOGO -->
+        <div class="logo-area">SM<span>DV</span></div>
 
-<script>
-    async function fetchVideo() {
-        const urlInput = document.getElementById('videoUrl').value.trim();
-        const loader = document.getElementById('loader');
-        const resultBox = document.getElementById('resultBox');
-        const errorMsg = document.getElementById('errorMsg');
-        
-        if (!urlInput) {
-            alert('Kripya pehle video link paste karein!');
-            return;
-        }
-        
-        // UI Reset
-        loader.style.display = 'block';
-        resultBox.style.display = 'none';
-        errorMsg.style.display = 'none';
-        
-        try {
-            // Hum ek free public video downloader API ka use kar rahe hain
-            const apiUrl = `https://api-host.com{encodeURIComponent(urlInput)}`; 
-            // Note: Agar upar wali API block ho jaye, toh aap 'cobalt api' ya 'all-in-one downloader api' rapidapi se replace kar sakte hain.
+        <!-- MAIN THUMBNAIL CARD -->
+        <div class="main-card">
+            <h1>Premium Thumbnail Downloader</h1>
+            <p class="subtitle">Grab high-resolution YouTube video thumbnails instantly with zero buffering.</p>
             
-            const response = await fetch(`https://cobalt.tools`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ url: urlInput })
-            });
+            <div class="input-group">
+                <input type="text" id="videoUrl" placeholder="Paste YouTube Video URL Link Here...">
+                <button onclick="getThumbnail()">Fetch Thumbnail</button>
+            </div>
             
-            const data = await response.json();
+            <!-- Completely Independent Result Area -->
+            <div id="thumbnailResult" class="result-box">
+                <p style="color: var(--lime-neon); margin-bottom: 10px; font-weight: 600;">Your Thumbnail is Ready!</p>
+                <img id="thumbPreview" src="" alt="Thumbnail Preview">
+                <a id="downloadLink" href="" download="thumbnail.jpg" class="download-btn">Download Full HD Image 📥</a>
+            </div>
+        </div>
+
+        <!-- 1st AD PLACEMENT: 320x50 MOBILE BANNER -->
+        <div class="ad-container-slim">
+            <script>
+              atOptions = {
+                'key' : '23898e2a0db96390e171333f673code84',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/23898e2a0db96390e171333f673db484/invoke.js"></script>
+        </div>
+
+        <!-- INFO CARD -->
+        <div class="grid-card">
+            <h2>WHY USE SMDV?</h2>
+            <ul class="features-list">
+                <li>100% Independent & Fast Local Processing</li>
+                <li>Download in Ultra HD (1080p) Resolution</li>
+                <li>Completely Unblockable by Chrome and Mobile Browsers</li>
+            </ul>
+        </div>
+
+        <!-- 2nd AD PLACEMENT: 300x250 RECTANGLE BOX -->
+        <div class="ad-container-box">
+            <script>
+              atOptions = {
+                'key' : 'c32dd45d144531ffa6d8ef8549b1a33f',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/c32dd45d144531ffa6d8ef8549b1a33f/invoke.js"></script>
+        </div>
+    </div>
+
+    <!-- 100% INDEPENDENT JAVASCRIPT EXTRACTOR -->
+    <script>
+        function getThumbnail() {
+            var url = document.getElementById("videoUrl").value.trim();
+            var resultBox = document.getElementById("thumbnailResult");
+            var imgPreview = document.getElementById("thumbPreview");
+            var downBtn = document.getElementById("downloadLink");
             
-            if (data && data.url) {
-                loader.style.display = 'none';
-                resultBox.style.display = 'block';
-                
-                document.getElementById('videoTitle').innerText = "Aapka video download ke liye taiyar hai!";
-                document.getElementById('videoThumb').style.display = 'none'; // Cobalt thumbnail nahi deta direct
-                
-                const dBtn = document.getElementById('downloadLink');
-                dBtn.href = data.url;
-            } else {
-                throw new Error('Invalid response');
+            if(url === "") {
+                alert("कृपया पहले यूट्यूब वीडियो का लिंक डालें! ⚠️");
+                return;
             }
+
+            var videoId = "";
             
-        } catch (error) {
-            loader.style.display = 'none';
-            errorMsg.style.display = 'block';
-            console.error(error);
+            // Extract Video ID from various YouTube URL formats
+            if(url.indexOf("://youtube.com") !== -1) {
+                var urlParams = new URLSearchParams(url.substring(url.indexOf('?')));
+                videoId = urlParams.get('v');
+            } else if(url.indexOf("youtu.be/") !== -1) {
+                videoId = url.split("youtu.be/")[1].split("?")[0];
+            } else if(url.indexOf("://youtube.com") !== -1) {
+                videoId = url.split("shorts/")[1].split("?")[0];
+            } else {
+                alert("अमान्य लिंक! कृपया सही यूट्यूब वीडियो या शॉर्ट्स का लिंक डालें। ❌");
+                return;
+            }
+
+            if(videoId && videoId.trim() !== "") {
+                // Direct Max Resolution Image Path (100% Independent)
+                var thumbUrl = "https://youtube.com" + videoId.trim() + "/maxresdefault.jpg";
+                
+                imgPreview.src = thumbUrl;
+                downBtn.href = thumbUrl;
+                downBtn.target = "_blank"; 
+                
+                resultBox.style.display = "block";
+                resultBox.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert("वीडियो आईडी ढूंढने में असमर्थ! कृपया लिंक दोबारा जांचें। ⚠️");
+            }
         }
-    }
-</script>
+    </script>
 
 </body>
 </html>
