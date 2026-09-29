@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instant YouTube Thumbnail Downloader</title>
-    <!-- Tailwind CSS for Modern and Premium Dark UI -->
+    <!-- Tailwind CSS for Modern Premium Dark UI -->
     <script src="https://tailwindcss.com"></script>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
@@ -20,12 +20,12 @@
                     <h1 class="text-xl font-extrabold tracking-tight text-white">ThumbGrab <span class="text-rose-500">Pro</span></h1>
                     <p class="text-xs text-emerald-400 flex items-center gap-1 font-mono">
                         <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        100% Serverless & Server-Independent
+                        100% Serverless & Fixed Logic Engine
                     </p>
                 </div>
             </div>
             <span class="text-[11px] font-mono bg-slate-950 px-3 py-1.5 rounded-md border border-slate-800 text-slate-400">
-                Status: Bypassed & Unblockable
+                Status: Bypassed & Independent
             </span>
         </div>
     </header>
@@ -37,7 +37,7 @@
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl mb-8">
             <h2 class="text-base font-semibold text-slate-200 mb-3">Paste YouTube Video Link Here:</h2>
             <div class="flex flex-col sm:flex-row gap-3">
-                <input type="text" id="youtubeLink" placeholder="e.g., https://youtube.com ya https://youtu.be" class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-rose-500 font-mono tracking-wide placeholder-slate-600">
+                <input type="text" id="youtubeLink" placeholder="e.g., https://youtube.com ya https://youtu.be..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-rose-500 font-mono tracking-wide placeholder-slate-600">
                 <button onclick="extractThumbnails()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-rose-600/20 active:scale-95 whitespace-nowrap">
                     Fetch Thumbnails ⚡
                 </button>
@@ -46,14 +46,14 @@
         </div>
 
         <!-- Output Cards Grid Layout (Hidden by default) -->
-        <div id="resultsLayout" class="hidden space-y-8 animate-fade-in">
+        <div id="resultsLayout" class="hidden space-y-8">
             
             <!-- Category Title -->
             <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <span>✨</span> Available Resolutions
                 </h3>
-                <span class="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">Right-click target to save alternatively</span>
+                <span class="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">Note: Kuch videos me Ultra HD available nahi hota.</span>
             </div>
 
             <!-- Resolution Blocks -->
@@ -68,8 +68,8 @@
                         </div>
                         <img id="imgMax" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Max Quality Thumbnail">
                     </div>
-                    <button onclick="triggerDownload('imgMax', 'Ultra-HD-Thumbnail.jpg')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Download Ultra HD Thumbnail
+                    <button onclick="triggerDownload('imgMax')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
+                        Open & Download Ultra HD
                     </button>
                 </div>
 
@@ -82,8 +82,8 @@
                         </div>
                         <img id="imgHq" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="High Quality Thumbnail">
                     </div>
-                    <button onclick="triggerDownload('imgHq', 'High-Quality-Thumbnail.jpg')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Download HQ Thumbnail
+                    <button onclick="triggerDownload('imgHq')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
+                        Open & Download HQ Thumbnail
                     </button>
                 </div>
 
@@ -96,8 +96,8 @@
                         </div>
                         <img id="imgMq" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Medium Quality Thumbnail">
                     </div>
-                    <button onclick="triggerDownload('imgMq', 'Medium-Quality-Thumbnail.jpg')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Download Medium Res
+                    <button onclick="triggerDownload('imgMq')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
+                        Open & Download Medium Res
                     </button>
                 </div>
 
@@ -110,8 +110,8 @@
                         </div>
                         <img id="imgDefault" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Standard Quality Thumbnail">
                     </div>
-                    <button onclick="triggerDownload('imgDefault', 'Standard-Thumbnail.jpg')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Download Normal Res
+                    <button onclick="triggerDownload('imgDefault')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
+                        Open & Download Normal Res
                     </button>
                 </div>
 
@@ -126,11 +126,11 @@
 
     <!-- Logic Processing Script Operations -->
     <script>
-        // Regex logic block to decode short URLs, mobile nodes, and standard desk parameters
+        // Highly optimized URL Parser to pull 11-character Video ID
         function parseYoutubeId(url) {
-            const pattern = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+            const pattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             const match = url.match(pattern);
-            return (match && match[1].length === 11) ? match[1] : null;
+            return (match && match[1]) ? match[1] : null;
         }
 
         function extractThumbnails() {
@@ -146,19 +146,26 @@
                 return;
             }
 
-            // Hide previous errors if path is valid
+            // Hide error box
             errorBox.classList.add('hidden');
 
-            // Map target structural sources directly using open YouTube static server buckets
-            document.getElementById('imgMax').src = `https://youtube.com{videoId}/maxresdefault.jpg`;
-            document.getElementById('imgHq').src = `https://youtube.com{videoId}/hqdefault.jpg`;
-            document.getElementById('imgMq').src = `https://youtube.com{videoId}/mqdefault.jpg`;
-            document.getElementById('imgDefault').src = `https://youtube.com{videoId}/default.jpg`;
+            // Set source images directly using global YouTube content nodes
+            document.getElementById('imgMax').src = `https://ytimg.com{videoId}/maxresdefault.jpg`;
+            document.getElementById('imgHq').src = `https://ytimg.com{videoId}/hqdefault.jpg`;
+            document.getElementById('imgMq').src = `https://ytimg.com{videoId}/mqdefault.jpg`;
+            document.getElementById('imgDefault').src = `https://ytimg.com{videoId}/default.jpg`;
 
-            // Display UI content boards
+            // Reveal dashboard
             resultsBox.classList.remove('hidden');
         }
 
-        // Safe Client-Side Binary Blob Downloader (Overcomes instant network iframe closures)
-        async function triggerDownload(elementId, customName) {
-        
+        // Direct secure viewer opener to bypass browser restrictions
+        function triggerDownload(elementId) {
+            const sourceUrl = document.getElementById(elementId).src;
+            if (sourceUrl) {
+                window.open(sourceUrl, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
