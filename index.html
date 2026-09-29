@@ -1,129 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediaGrab Ultra - 100% Fixed Edition</title>
+    <title>Free YouTube Thumbnail Extractor</title>
+    <!-- Tailwind CSS for Modern Dark Premium UI -->
     <script src="https://tailwindcss.com"></script>
+    <style>
+        body { background-color: #0d0d0d; }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
+<body class="text-gray-200 font-sans min-h-screen flex flex-col justify-between">
 
-    <!-- Header -->
-    <header class="bg-slate-900 border-b border-slate-800 p-5 shadow-xl">
-        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 text-white p-2.5 rounded-xl font-black text-xl shadow-lg shadow-indigo-600/30">
-                    🚀
-                </div>
-                <div>
-                    <h1 class="text-xl font-extrabold tracking-tight text-white">MediaGrab <span class="text-indigo-500">Ultra</span></h1>
-                    <p class="text-xs text-emerald-400 font-mono">100% Verified & Tested Offline Engine</p>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Workspace -->
-    <main class="max-w-5xl mx-auto p-4 md:p-8 flex-grow w-full">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl mb-8">
-            <h2 class="text-base font-semibold text-slate-200 mb-3">Paste Link (YouTube, Shorts, or Instagram):</h2>
-            <div class="flex flex-col sm:flex-row gap-3">
-                <input type="text" id="mediaLink" placeholder="Paste link here..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono">
-                <button onclick="processMediaLink()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg active:scale-95 whitespace-nowrap">
-                    Grab Media ⚡
-                </button>
-            </div>
-            <div id="errorMessage" class="text-rose-400 text-xs mt-2 font-mono hidden">⚠️ Invalid URL! Kripya sahi link enter karein.</div>
+    <!-- Container Area -->
+    <main class="max-w-xl mx-auto w-full px-4 py-8 flex-grow">
+        
+        <!-- Header Text Block -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-black text-red-600 tracking-tight mb-2">Link डाो.</h1>
+            <p class="text-sm text-gray-400">किसी भी YouTube वीडियो का thumbnail Full HD 1080p में डाउनलोड करें। तेज़, साफ़ और बिना login के।</p>
         </div>
 
-        <!-- Output Card -->
-        <div id="resultsLayout" class="hidden space-y-8">
-            <div class="max-w-xl mx-auto bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-md">
-                <div>
-                    <span id="platformBadge" class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded font-mono">Platform</span>
-                    <div class="mt-4 aspect-video w-full rounded-lg border border-slate-950 bg-slate-950 overflow-hidden flex items-center justify-center">
-                        <img id="mediaPreview" class="w-full h-full object-contain hidden" src="" alt="Preview" onerror="handleImageError()">
-                        <div id="loadingPlaceholder" class="text-sm text-slate-500 font-mono">Processing...</div>
-                    </div>
+        <!-- Main Input Frame Dashboard -->
+        <div class="bg-[#141414] border border-gray-800 rounded-2xl p-5 shadow-2xl relative">
+            
+            <div class="flex justify-between items-center text-[10px] text-gray-500 font-mono mb-4 uppercase tracking-wider">
+                <span>⚡ THUMBNAIL EXTRACTOR</span>
+                <span>01 / 01</span>
+            </div>
+
+            <!-- Input Fields Component -->
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-xs font-semibold text-gray-300">YouTube link</label>
+                    <button onclick="handleClipboardPaste()" class="text-xs text-red-400 hover:text-red-500 font-medium transition">📋 Paste करें</button>
                 </div>
-                <button onclick="triggerDownload()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-3 rounded-lg transition tracking-wide shadow-md">
-                    Open / Download Media
+                
+                <div class="relative flex items-center">
+                    <span class="absolute left-3.5 text-gray-500 text-sm">🔗</span>
+                    <input type="text" id="youtubeUrlField" placeholder="https://youtube.com..." class="w-full bg-[#0a0a0a] border border-gray-800 rounded-xl pl-10 pr-10 py-3.5 text-sm text-white focus:outline-none focus:border-red-600 font-mono">
+                    <button onclick="wipeInputField()" class="absolute right-3.5 text-gray-500 hover:text-gray-300 text-xs font-bold">✕</button>
+                </div>
+            </div>
+
+            <!-- Click Trigger Button -->
+            <button onclick="processThumbnailEngine()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition flex justify-center items-center gap-2 text-sm active:scale-[0.98]">
+                Thumbnail निकालो 📥
+            </button>
+
+            <!-- Metadata Badges -->
+            <div class="mt-4 pt-3 border-t border-gray-900/60 flex flex-wrap gap-1.5 items-center">
+                <span class="text-[10px] bg-[#1a1a1a] border border-gray-800 px-2 py-0.5 rounded text-gray-400 font-mono">watch</span>
+                <span class="text-[10px] bg-[#1a1a1a] border border-gray-800 px-2 py-0.5 rounded text-gray-400 font-mono">youtu.be</span>
+                <span class="text-[10px] bg-[#1a1a1a] border border-gray-800 px-2 py-0.5 rounded text-gray-400 font-mono">Shorts</span>
+                <span class="text-[10px] bg-[#1a1a1a] border border-gray-800 px-2 py-0.5 rounded text-gray-400 font-mono">embed</span>
+            </div>
+        </div>
+
+        <!-- Dynamic Output Desk Panels (Niche automatic display hone wala area) -->
+        <div id="displayWorkspace" class="hidden mt-6 space-y-6">
+            
+            <!-- Green Alert Banner -->
+            <div class="bg-green-950/20 border border-green-800/40 text-green-400 rounded-xl p-3 text-xs flex items-start gap-2">
+                <span class="font-bold">✓</span>
+                <div>
+                    <span class="font-bold">Thumbnail extracted successfully!</span>
+                    <p class="text-[11px] text-gray-400 mt-0.5">HD Quality Preview ready है — अब इसे नीचे से save करें।</p>
+                </div>
+            </div>
+
+            <!-- Image Target Box Layout -->
+            <div class="bg-[#141414] border border-gray-800 rounded-2xl p-4 shadow-xl">
+                <div class="text-[10px] text-gray-500 font-mono mb-2 uppercase tracking-wider">PREVIEW / HD QUALITY</div>
+                <div class="aspect-video w-full rounded-xl overflow-hidden border border-black bg-black">
+                    <img id="imagePreviewElement" class="w-full h-full object-cover" src="" alt="Thumbnail View" onerror="fallbackQualityEngine()">
+                </div>
+                <div class="flex justify-between items-center mt-3 text-[10px] font-mono text-gray-500">
+                    <span id="labelDisplayNode">ID / ------</span>
+                </div>
+            </div>
+
+            <!-- Download Button Interface Component -->
+            <div class="bg-[#141414] border border-gray-800 rounded-2xl p-5 shadow-xl">
+                <h3 class="text-xl font-bold text-white mb-1">आपका thumbnail तैयार है।</h3>
+                <p class="text-xs text-gray-400 mb-4">नीचे दिए गए बटन पर क्लिक करके इमेज को सीधे अपने डिवाइस में सेव करें।</p>
+                
+                <button onclick="executeBlobDownloadRoutine()" class="w-full bg-white hover:bg-gray-200 text-black font-extrabold py-3.5 rounded-xl text-sm transition active:scale-[0.98]">
+                    फ़ाइल डाउनलोड करें
                 </button>
             </div>
         </div>
     </main>
 
-    <footer class="bg-slate-950 border-t border-slate-900 text-center py-5 text-xs text-slate-600 font-mono">
-        <p>Pure Client-Side Framework. Stays 100% Unblockable.</p>
+    <!-- Footer Meta Layout -->
+    <footer class="text-center py-6 text-[10px] text-gray-600 font-mono border-t border-gray-950">
+        Ready to download. <span onclick="resetWorkspaceDesk()" class="text-red-500 cursor-pointer hover:underline ml-1">🔄 नया link</span>
     </footer>
 
+    <!-- Verification Logic Block -->
     <script>
-        let currentTargetUrl = "";
-        let fallbackUrl = "";
+        let globalCleanVideoId = "";
+        let primaryHighResUrl = "";
+        let fallbackStandardUrl = "";
+        let finalDownloadableUrl = "";
 
-        function getYouTubeId(url) {
-            // Live Tested Regex: Extracting group index [2] safely
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
+        // Fixed Extraction Array Item Pointer Node
+        function sliceYoutubeStringId(url) {
+            const pattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(pattern);
+            // Index 1 accesses ONLY the raw alphanumeric ID string token securely
+            return (match && match.length > 1) ? match[1] : null;
         }
 
-        function processMediaLink() {
-            const inputUrl = document.getElementById('mediaLink').value.trim();
-            const errorBox = document.getElementById('errorMessage');
-            const resultsBox = document.getElementById('resultsLayout');
-            const previewImg = document.getElementById('mediaPreview');
-            const placeholder = document.getElementById('loadingPlaceholder');
-            const badge = document.getElementById('platformBadge');
+        function processThumbnailEngine() {
+            const inputNode = document.getElementById('youtubeUrlField');
+            const videoId = sliceYoutubeStringId(inputNode.value.trim());
+            const workspace = document.getElementById('displayWorkspace');
 
-            errorBox.classList.add('hidden');
-            resultsBox.classList.add('hidden');
-            previewImg.classList.add('hidden');
-            placeholder.classList.remove('hidden');
+            if (!videoId) {
+                alert('कृपया एक सही YouTube वीडियो या Shorts का लिंक डालें!');
+                return;
+            }
 
-            // 1. YouTube & Shorts
-            const videoId = getYouTubeId(inputUrl);
-            if (videoId) {
-                currentTargetUrl = `https://youtube.com{videoId}/maxresdefault.jpg`;
-                fallbackUrl = `https://youtube.com{videoId}/hqdefault.jpg`;
+            globalCleanVideoId = videoId;
+            primaryHighResUrl = `https://youtube.com{videoId}/maxresdefault.jpg`;
+            fallbackStandardUrl = `https://youtube.com{videoId}/hqdefault.jpg`;
+            finalDownloadableUrl = primaryHighResUrl;
+
+            // Direct data setup without breaks
+            document.getElementById('imagePreviewElement').src = primaryHighResUrl;
+            document.getElementById('labelDisplayNode').textContent = `ID / ${videoId}`;
+
+            // Unhide the panel right underneath the input panel automatically
+            workspace.classList.remove('hidden');
+            workspace.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Auto-switch engine if 1080p asset fails to load safely
+        function fallbackQualityEngine() {
+            const preview = document.getElementById('imagePreviewElement');
+            if (preview.src === primaryHighResUrl) {
+                preview.src = fallbackStandardUrl;
+                finalDownloadableUrl = fallbackStandardUrl;
+            }
+        }
+
+        // Serverless File Downloader Loop
+        async function executeBlobDownloadRoutine() {
+            if (!finalDownloadableUrl) return;
+            
+            try {
+                // Streaming chunk buffer to force device native file saving alerts
+                const res = await fetch(finalDownloadableUrl);
+                const blob = await res.blob();
+                const blobLocalUrl = window.URL.createObjectURL(blob);
                 
-                badge.textContent = "YouTube Video / Shorts";
-                previewImg.src = currentTargetUrl;
-                previewImg.classList.remove('hidden');
-                placeholder.classList.add('hidden');
-                resultsBox.classList.remove('hidden');
-                return;
-            }
-
-            // 2. Instagram
-            if (inputUrl.includes("instagram.com")) {
-                let cleanUrl = inputUrl.split('?')[0];
-                if (!cleanUrl.endsWith('/')) cleanUrl += '/';
-                currentTargetUrl = `${cleanUrl}media/?size=l`;
-                fallbackUrl = "";
-
-                badge.textContent = "Instagram Media";
-                previewImg.src = currentTargetUrl;
-                previewImg.classList.remove('hidden');
-                placeholder.classList.add('hidden');
-                resultsBox.classList.remove('hidden');
-                return;
-            }
-
-            errorBox.classList.remove('hidden');
-        }
-
-        function handleImageError() {
-            const previewImg = document.getElementById('mediaPreview');
-            if (fallbackUrl && previewImg.src !== fallbackUrl) {
-                previewImg.src = fallbackUrl;
-                currentTargetUrl = fallbackUrl;
+                const virtualLink = document.createElement('a');
+                virtualLink.style.display = 'none';
+                virtualLink.href = blobLocalUrl;
+                virtualLink.download = `YouTube-Thumbnail-${globalCleanVideoId}.jpg`;
+                
+                document.body.appendChild(virtualLink);
+                virtualLink.click();
+                
+                window.URL.revokeObjectURL(blobLocalUrl);
+                document.body.removeChild(virtualLink);
+            } catch (err) {
+                // Secure Fallback if browser cross-origin policy intercepts high-level fetch streams
+                window.open(finalDownloadableUrl, '_blank');
             }
         }
 
-        function triggerDownload() {
-            if (currentTargetUrl) {
-                window.open(currentTargetUrl, '_blank');
+        function wipeInputField() {
+            document.getElementById('youtubeUrlField').value = "";
+        }
+
+        function resetWorkspaceDesk() {
+            wipeInputField();
+            document.getElementById('displayWorkspace').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function handleClipboardPaste() {
+            try {
+                const clipText = await navigator.clipboard.readText();
+                document.getElementById('youtubeUrlField').value = clipText;
+            } catch (e) {
+                alert('Clipboard access manual override needed.');
             }
         }
     </script>
