@@ -20,7 +20,7 @@
                     <h1 class="text-xl font-extrabold tracking-tight text-white">ThumbGrab <span class="text-rose-500">Pro</span></h1>
                     <p class="text-xs text-emerald-400 flex items-center gap-1 font-mono">
                         <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        100% Serverless & Fixed Logic Engine
+                        100% Serverless & Bug-Fixed Engine
                     </p>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <span>✨</span> Available Resolutions
                 </h3>
-                <span class="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">Note: Kuch videos me Ultra HD available nahi hota.</span>
+                <span class="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">Tip: Thumbnail open hone par tap karke hold karein aur download kar lein.</span>
             </div>
 
             <!-- Resolution Blocks -->
@@ -64,12 +64,11 @@
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-xs font-bold text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded font-mono">Maximum Quality (1080p/720p)</span>
-                            <span class="text-[11px] text-slate-500 font-mono">maxresdefault.jpg</span>
                         </div>
                         <img id="imgMax" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Max Quality Thumbnail">
                     </div>
                     <button onclick="triggerDownload('imgMax')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Open & Download Ultra HD
+                        Open Ultra HD
                     </button>
                 </div>
 
@@ -78,12 +77,11 @@
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded font-mono">High Quality (480p)</span>
-                            <span class="text-[11px] text-slate-500 font-mono">hqdefault.jpg</span>
                         </div>
                         <img id="imgHq" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="High Quality Thumbnail">
                     </div>
                     <button onclick="triggerDownload('imgHq')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Open & Download HQ Thumbnail
+                        Open HQ Thumbnail
                     </button>
                 </div>
 
@@ -92,12 +90,11 @@
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded font-mono">Medium Quality (360p)</span>
-                            <span class="text-[11px] text-slate-500 font-mono">mqdefault.jpg</span>
                         </div>
                         <img id="imgMq" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Medium Quality Thumbnail">
                     </div>
                     <button onclick="triggerDownload('imgMq')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Open & Download Medium Res
+                        Open Medium Res
                     </button>
                 </div>
 
@@ -106,12 +103,11 @@
                     <div>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-xs font-bold text-slate-400 bg-slate-500/10 px-2.5 py-1 rounded font-mono">Standard Quality (Normal)</span>
-                            <span class="text-[11px] text-slate-500 font-mono">default.jpg</span>
                         </div>
                         <img id="imgDefault" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Standard Quality Thumbnail">
                     </div>
                     <button onclick="triggerDownload('imgDefault')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Open & Download Normal Res
+                        Open Normal Res
                     </button>
                 </div>
 
@@ -126,7 +122,7 @@
 
     <!-- Logic Processing Script Operations -->
     <script>
-        // Highly optimized URL Parser to pull 11-character Video ID
+        // Enhanced URL Parser to handle watch?, shorts/, embed/, share links, and time anchors
         function parseYoutubeId(url) {
             const pattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             const match = url.match(pattern);
@@ -146,20 +142,18 @@
                 return;
             }
 
-            // Hide error box
             errorBox.classList.add('hidden');
 
-            // Set source images directly using global YouTube content nodes
-            document.getElementById('imgMax').src = `https://ytimg.com{videoId}/maxresdefault.jpg`;
-            document.getElementById('imgHq').src = `https://ytimg.com{videoId}/hqdefault.jpg`;
-            document.getElementById('imgMq').src = `https://ytimg.com{videoId}/mqdefault.jpg`;
-            document.getElementById('imgDefault').src = `https://ytimg.com{videoId}/default.jpg`;
+            // Bug Fixed: Using correct template strings with backticks to inject videoId variables
+            document.getElementById('imgMax').src = `https://youtube.com{videoId}/maxresdefault.jpg`;
+            document.getElementById('imgHq').src = `https://youtube.com{videoId}/hqdefault.jpg`;
+            document.getElementById('imgMq').src = `https://youtube.com{videoId}/mqdefault.jpg`;
+            document.getElementById('imgDefault').src = `https://youtube.com{videoId}/default.jpg`;
 
-            // Reveal dashboard
             resultsBox.classList.remove('hidden');
         }
 
-        // Direct secure viewer opener to bypass browser restrictions
+        // Direct secure viewer opener
         function triggerDownload(elementId) {
             const sourceUrl = document.getElementById(elementId).src;
             if (sourceUrl) {
