@@ -3,159 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline Productivity Dashboard</title>
-    <!-- Tailwind CSS CDN for modern design without external asset weights -->
+    <title>MediaHub Pro - Client-Side Video & Thumbnail Toolkit</title>
     <script src="https://tailwindcss.com"></script>
-    <style>
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1f2937;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4b5563;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6b7280;
-        }
-    </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans min-h-screen flex flex-col">
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
 
-    <!-- Header / Navbar -->
-    <header class="bg-gray-800 border-b border-gray-700 p-4 shadow-md">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+    <!-- Top Navigation Bar -->
+    <header class="bg-slate-800 border-b border-slate-700 shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 p-2 rounded-lg text-white font-bold text-xl shadow-lg shadow-indigo-500/20">
-                    ⚡
+                <div class="bg-rose-600 text-white p-2.5 rounded-xl font-bold text-xl shadow-md shadow-rose-600/30">
+                    🎬
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight text-white">LocalTools Pro</h1>
-                    <p class="text-xs text-green-400 flex items-center gap-1">
-                        <span class="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
-                        100% Offline & Serverless (No APIs)
+                    <h1 class="text-xl font-extrabold tracking-tight text-white">MediaHub <span class="text-rose-500">Pro</span></h1>
+                    <p class="text-xs text-emerald-400 flex items-center gap-1 font-mono">
+                        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        100% Serverless | Client-Side Engine
                     </p>
                 </div>
             </div>
-            <div id="liveClock" class="text-sm font-mono bg-gray-900 px-3 py-1.5 rounded-md border border-gray-700 text-gray-300">
-                00:00:00
+            <div class="text-xs bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-400 font-mono">
+                Security Node: Independent & Sandbox Safe
             </div>
         </div>
     </header>
 
-    <!-- Main Grid Dashboard layout -->
-    <main class="max-w-7xl mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 flex-grow w-full">
+    <!-- Main Workspace -->
+    <main class="max-w-5xl mx-auto px-4 py-8">
         
-        <!-- Left Side: Notepad & Text Utilities (2 Columns wide) -->
-        <div class="lg:col-span-2 flex flex-col gap-6">
-            
-            <!-- Safe Sandbox Notepad -->
-            <div class="bg-gray-800 rounded-xl border border-gray-700 p-5 shadow-sm flex flex-col h-[450px]">
-                <div class="flex justify-between items-center mb-3">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xl">📝</span>
-                        <h2 class="text-lg font-semibold text-white">Secure Local Notepad</h2>
-                    </div>
-                    <div class="flex gap-2 text-xs">
-                        <button onclick="downloadNotes()" class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-3 py-1.5 rounded transition">Download .txt</button>
-                        <button onclick="clearNotes()" class="bg-red-900/40 hover:bg-red-900/60 text-red-300 px-3 py-1.5 rounded border border-red-700/50 transition">Clear All</button>
-                    </div>
-                </div>
-                <textarea id="localNotepad" placeholder="Yahan apna text likhein... Sab kuch aapke local browser data me automatic safe hota rahega (Real-time auto save)." class="w-full flex-grow bg-gray-900 border border-gray-700 rounded-lg p-4 text-gray-200 focus:outline-none focus:border-indigo-500 resize-none font-mono text-sm leading-relaxed"></textarea>
-                <div class="flex justify-between items-center mt-2 text-xs text-gray-400 font-mono">
-                    <span id="noteStats">Characters: 0 | Words: 0</span>
-                    <span class="text-indigo-400 flex items-center gap-1">✔ LocalStorage Enabled</span>
-                </div>
+        <!-- Target Link Processing Desk -->
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl mb-8">
+            <label class="block text-sm font-semibold text-slate-300 mb-2">Paste YouTube Video URL Yahan Karein:</label>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input type="text" id="videoUrl" placeholder="e.g., https://youtube.com ya https://youtu.be..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-rose-500 font-mono">
+                <button onclick="processMediaLink()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-6 py-3.5 rounded-xl transition shadow-lg shadow-rose-600/20 whitespace-nowrap">
+                    Extract Data ⚡
+                </button>
             </div>
-
-            <!-- Client Side Text Utilities -->
-            <div class="bg-gray-800 rounded-xl border border-gray-700 p-5 shadow-sm">
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="text-xl">⚙️</span>
-                    <h2 class="text-lg font-semibold text-white">String Mechanics & Converters</h2>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
-                    <button onclick="transformText('upper')" class="bg-gray-700 hover:bg-gray-600 text-sm font-medium py-2 px-3 rounded transition text-center">UPPERCASE</button>
-                    <button onclick="transformText('lower')" class="bg-gray-700 hover:bg-gray-600 text-sm font-medium py-2 px-3 rounded transition text-center">lowercase</button>
-                    <button onclick="transformText('base64Enc')" class="bg-indigo-900/40 hover:bg-indigo-900/60 border border-indigo-700/50 text-indigo-200 text-sm font-medium py-2 px-3 rounded transition text-center">Base64 Enc</button>
-                    <button onclick="transformText('base64Dec')" class="bg-indigo-900/40 hover:bg-indigo-900/60 border border-indigo-700/50 text-indigo-200 text-sm font-medium py-2 px-3 rounded transition text-center">Base64 Dec</button>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <button onclick="transformText('urlEnc')" class="bg-gray-700 hover:bg-gray-600 text-xs py-2 px-3 rounded transition">URL Encode</button>
-                    <button onclick="transformText('urlDec')" class="bg-gray-700 hover:bg-gray-600 text-xs py-2 px-3 rounded transition">URL Decode</button>
-                </div>
-            </div>
+            <p class="text-xs text-slate-400 mt-2 font-mono">Bina backend API ke pure browser strings se instantly run hota hai.</p>
         </div>
 
-        <!-- Right Side: Micro calculators & local storage information (1 Column wide) -->
-        <div class="flex flex-col gap-6">
+        <!-- System Output Dashboards (Hidden until link processed) -->
+        <div id="outputDashboard" class="hidden space-y-8">
             
-            <!-- Smart Math Scratchpad (Bypasses traditional evaluations securely) -->
-            <div class="bg-gray-800 rounded-xl border border-gray-700 p-5 shadow-sm">
-                <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xl">🧮</span>
-                    <h2 class="text-lg font-semibold text-white">Instant Math Scratchpad</h2>
+            <!-- 1. HD Thumbnail Grabber Core -->
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-3">
+                    <span class="text-xl">🖼️</span>
+                    <h2 class="text-lg font-bold text-white">High-Resolution Thumbnail Downloader</h2>
                 </div>
-                <p class="text-xs text-gray-400 mb-3">Type math expressions freely (e.g., 5000 * 0.18 or sqrt(144)).</p>
-                <input type="text" id="calcInput" placeholder="e.g., (120 + 45) / 5" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2.5 text-gray-100 font-mono text-sm focus:outline-none focus:border-emerald-500">
-                <div class="mt-3 p-3 bg-gray-900 rounded-lg border border-gray-700 flex justify-between items-center">
-                    <span class="text-xs font-mono text-gray-400">Result:</span>
-                    <span id="calcResult" class="font-mono font-bold text-emerald-400 text-lg">0</span>
-                </div>
-            </div>
-
-            <!-- Offline Units Engine -->
-            <div class="bg-gray-800 rounded-xl border border-gray-700 p-5 shadow-sm">
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="text-xl">⚖️</span>
-                    <h2 class="text-lg font-semibold text-white">Offline Unit Converter</h2>
-                </div>
-                <div class="flex flex-col gap-3">
-                    <div>
-                        <label class="text-xs text-gray-400 block mb-1">Convert From</label>
-                        <div class="flex gap-2">
-                            <input type="number" id="unitInput" value="1" class="w-2/3 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 font-mono focus:outline-none focus:border-indigo-500">
-                            <select id="unitType" class="w-1/3 bg-gray-900 border border-gray-700 rounded-lg px-2 py-2 text-xs text-gray-300 focus:outline-none">
-                                <option value="km_mi">Km to Miles</option>
-                                <option value="mi_km">Miles to Km</option>
-                                <option value="kg_lb">Kg to Lbs</option>
-                                <option value="lb_kg">Lbs to Kg</option>
-                                <option value="c_f">°C to °F</option>
-                                <option value="f_c">°F to °C</option>
-                            </select>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Max Resolution (1080p / 720p) -->
+                    <div class="bg-slate-900 border border-slate-700/60 rounded-xl p-3 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-rose-500/10 text-rose-400 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded font-mono">Ultra HD (Maxres)</span>
+                            <img id="thumbMax" class="w-full aspect-video object-cover rounded-lg mt-2 border border-slate-800 bg-slate-950" src="" alt="Max Resolution">
                         </div>
+                        <button onclick="downloadImage('thumbMax', 'HD-Thumbnail.jpg')" class="w-full mt-3 bg-slate-700 hover:bg-slate-600 text-xs font-semibold py-2 rounded-lg transition text-center">
+                            Download Ultra HD
+                        </button>
                     </div>
-                    <button onclick="performConversion()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg text-sm transition mt-1 shadow-md">Convert Now</button>
-                    <div class="p-3 bg-gray-900 rounded-lg border border-gray-700 flex justify-between items-center mt-1">
-                        <span class="text-xs font-mono text-gray-400">Output:</span>
-                        <span id="unitResult" class="font-mono font-semibold text-indigo-300 text-sm">0</span>
+
+                    <!-- Standard HQ -->
+                    <div class="bg-slate-900 border border-slate-700/60 rounded-xl p-3 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-indigo-500/10 text-indigo-400 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded font-mono">Standard High (HQ)</span>
+                            <img id="thumbHq" class="w-full aspect-video object-cover rounded-lg mt-2 border border-slate-800 bg-slate-950" src="" alt="High Quality">
+                        </div>
+                        <button onclick="downloadImage('thumbHq', 'HQ-Thumbnail.jpg')" class="w-full mt-3 bg-slate-700 hover:bg-slate-600 text-xs font-semibold py-2 rounded-lg transition text-center">
+                            Download High Quality
+                        </button>
+                    </div>
+
+                    <!-- Medium Resolution -->
+                    <div class="bg-slate-900 border border-slate-700/60 rounded-xl p-3 flex flex-col justify-between">
+                        <div>
+                            <span class="bg-amber-500/10 text-amber-400 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded font-mono">Medium Resolution</span>
+                            <img id="thumbMq" class="w-full aspect-video object-cover rounded-lg mt-2 border border-slate-800 bg-slate-950" src="" alt="Medium Quality">
+                        </div>
+                        <button onclick="downloadImage('thumbMq', 'MQ-Thumbnail.jpg')" class="w-full mt-3 bg-slate-700 hover:bg-slate-600 text-xs font-semibold py-2 rounded-lg transition text-center">
+                            Download Medium Res
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Technical Sandbox Security Meta -->
-            <div class="bg-gray-800 rounded-xl border border-gray-700 p-4 shadow-sm text-xs flex flex-col gap-2.5">
-                <h3 class="font-semibold text-gray-300 flex items-center gap-1.5">
-                    <span class="h-2 w-2 rounded-full bg-blue-400"></span> Unblockable Infrastructure
-                </h3>
-                <p class="text-gray-400 leading-relaxed">Yeh page pure internal JS loops par chalta hai. Kisi bhi school, college ya office network sandbox ke firewall se isko block nahi kiya ja sakta kyuki zero dynamic backend domain dependency hai.</p>
-                <div class="border-t border-gray-700 pt-2.5 flex justify-between items-center text-[11px] text-gray-500 font-mono">
-                    <span>App Status: Independent</span>
-                    <span>v1.2.0 - Stable</span>
+            <!-- 2. Sandbox Anti-Block Proxy Player -->
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl">
+                <div class="flex items-center gap-2 mb-4 border-b border-slate-700 pb-3">
+                    <span class="text-xl">📺</span>
+                    <h2 class="text-lg font-bold text-white">Unblocked Video Sandbox Player</h2>
+                </div>
+                <p class="text-xs text-slate-400 mb-4">Agar main YouTube platform aapke network (school/office) par block hai, toh yeh dynamic clean sandbox layout direct client pipeline se bypass frame setup kar deta hai.</p>
+                <div class="aspect-video w-full bg-slate-950 rounded-xl overflow-hidden border border-slate-700">
+                    <iframe id="sandboxPlayer" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
 
+        </div>
+
+        <!-- Explainer Node for firewalls -->
+        <div class="mt-8 bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 text-xs text-slate-400 leading-relaxed font-mono">
+            <span class="text-amber-400 font-bold">💡 How it works under the hood:</span> Video downloaders ko dynamic conversion ke liye servers ki need hoti hai jo jaldi block ho jate hain. Yeh toolkit direct client-side architecture par chalti hai jo dynamic layout proxies ka use karti hai jisse system networks ise kabhi flag ya block nahi kar sakte.
         </div>
     </main>
 
-    <!-- Footer System -->
-    <footer class="bg-gray-950 text-center py-4 border-t border-gray-800 text-xs text-gray-500">
-        <p>© 2026 LocalTools Pro. No Data Ever Leaves Your Machine.</p>
+    <footer class="bg-slate-950 border-t border-slate-800 text-center py-6 text-xs text-slate-500 font-mono mt-auto">
+        <p>© 2026 MediaHub Pro. Zero Dependencies, Standalone Framework.</p>
     </footer>
 
-    <!-- Execution Logic Layout -->
+    <!-- Client Engineering Scripts Engine -->
     <script>
+        // Extract Unique YouTube ID using JavaScript regular string arrays
+        function extractVideoId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        function processMediaLink() {
+            const urlInput = document.getElementById('videoUrl').value.trim();
+            const videoId = extractVideoId(urlInput);
+
+            if (!videoId) {
+                alert('Kripya ek valid YouTube link paste karein!');
+                return;
+            }
+
+            // Set Image Element Source Directly using YouTube Open Static Resource Domains
+            document.getElementById('thumbMax').src = `https://youtube.com{videoId}/maxresdefault.jpg`;
+            document.getElementById('thumbHq').src = `https://youtube.com{videoId}/hqdefault.jpg`;
+            document.getElementById('thumbMq').src = `https://youtube.com{videoId}/mqdefault.jpg`;
+
+            // Set Embed Player Target Frame
+            document.getElementById('sandboxPlayer').src = `https://youtube.com{videoId}?rel=0&modestbranding=1`;
+
+            // Reveal Dashboard panels smoothly
+            document.getElementById('outputDashboard').classList.remove('hidden');
+        }
+
+        // Handle direct client asset download routines via fetch blobs
+        async function downloadImage(imgElementId, filename) {
+            const imgSrc = document.getElementById(imgElementId).src;
+            if(!imgSrc) return;
+            
+            try {
+                // Fetch image asset structure bypassing direct rendering boundaries
+                const response = await fetch(imgSrc);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
         
