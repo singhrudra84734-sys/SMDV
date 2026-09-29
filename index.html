@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free YouTube Thumbnail Extractor</title>
-    <!-- Tailwind CSS for Modern Dark Premium UI -->
+    <!-- Tailwind CSS for Exact Premium Dark UI -->
     <script src="https://tailwindcss.com"></script>
     <style>
         body { background-color: #0d0d0d; }
@@ -15,13 +15,13 @@
     <!-- Container Area -->
     <main class="max-w-xl mx-auto w-full px-4 py-8 flex-grow">
         
-        <!-- Header Text Block -->
+        <!-- Header Title Segment -->
         <div class="mb-8">
             <h1 class="text-4xl font-black text-red-600 tracking-tight mb-2">Link डाो.</h1>
             <p class="text-sm text-gray-400">किसी भी YouTube वीडियो का thumbnail Full HD 1080p में डाउनलोड करें। तेज़, साफ़ और बिना login के।</p>
         </div>
 
-        <!-- Main Input Frame Dashboard -->
+        <!-- Main Form Input Dashboard -->
         <div class="bg-[#141414] border border-gray-800 rounded-2xl p-5 shadow-2xl relative">
             
             <div class="flex justify-between items-center text-[10px] text-gray-500 font-mono mb-4 uppercase tracking-wider">
@@ -29,26 +29,26 @@
                 <span>01 / 01</span>
             </div>
 
-            <!-- Input Fields Component -->
+            <!-- Input Node Container -->
             <div class="mb-4">
                 <div class="flex justify-between items-center mb-2">
                     <label class="text-xs font-semibold text-gray-300">YouTube link</label>
-                    <button onclick="handleClipboardPaste()" class="text-xs text-red-400 hover:text-red-500 font-medium transition">📋 Paste करें</button>
+                    <button onclick="pasteClipboardData()" class="text-xs text-red-400 hover:text-red-500 font-medium transition">📋 Paste करें</button>
                 </div>
                 
                 <div class="relative flex items-center">
                     <span class="absolute left-3.5 text-gray-500 text-sm">🔗</span>
-                    <input type="text" id="youtubeUrlField" placeholder="https://youtube.com..." class="w-full bg-[#0a0a0a] border border-gray-800 rounded-xl pl-10 pr-10 py-3.5 text-sm text-white focus:outline-none focus:border-red-600 font-mono">
-                    <button onclick="wipeInputField()" class="absolute right-3.5 text-gray-500 hover:text-gray-300 text-xs font-bold">✕</button>
+                    <input type="text" id="youtubeInput" placeholder="https://youtube.com..." class="w-full bg-[#0a0a0a] border border-gray-800 rounded-xl pl-10 pr-10 py-3.5 text-sm text-white focus:outline-none focus:border-red-600 font-mono">
+                    <button onclick="clearInputField()" class="absolute right-3.5 text-gray-500 hover:text-gray-300 text-xs font-bold">✕</button>
                 </div>
             </div>
 
-            <!-- Click Trigger Button -->
-            <button onclick="processThumbnailEngine()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition flex justify-center items-center gap-2 text-sm active:scale-[0.98]">
+            <!-- Action Button -->
+            <button onclick="processThumbnail()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition flex justify-center items-center gap-2 text-sm active:scale-[0.98]">
                 Thumbnail निकालो 📥
             </button>
 
-            <!-- Metadata Badges -->
+            <!-- Support Platform Info Tags -->
             <div class="mt-4 pt-3 border-t border-gray-900/60 flex flex-wrap gap-1.5 items-center">
                 <span class="text-[10px] bg-[#1a1a1a] border border-gray-800 px-2 py-0.5 rounded text-gray-400 font-mono">watch</span>
                 <span class="text-[10px] bg-[#1a1a1a] border border-gray-800 px-2 py-0.5 rounded text-gray-400 font-mono">youtu.be</span>
@@ -57,10 +57,10 @@
             </div>
         </div>
 
-        <!-- Dynamic Output Desk Panels (Niche automatic display hone wala area) -->
-        <div id="displayWorkspace" class="hidden mt-6 space-y-6">
+        <!-- Result Desk Workspace Panels (Automatic appends underneath without switching pages) -->
+        <div id="resultOutputArea" class="hidden mt-6 space-y-6">
             
-            <!-- Green Alert Banner -->
+            <!-- Success Status Notification -->
             <div class="bg-green-950/20 border border-green-800/40 text-green-400 rounded-xl p-3 text-xs flex items-start gap-2">
                 <span class="font-bold">✓</span>
                 <div>
@@ -69,124 +69,127 @@
                 </div>
             </div>
 
-            <!-- Image Target Box Layout -->
+            <!-- Image Canvas Panel -->
             <div class="bg-[#141414] border border-gray-800 rounded-2xl p-4 shadow-xl">
                 <div class="text-[10px] text-gray-500 font-mono mb-2 uppercase tracking-wider">PREVIEW / HD QUALITY</div>
                 <div class="aspect-video w-full rounded-xl overflow-hidden border border-black bg-black">
-                    <img id="imagePreviewElement" class="w-full h-full object-cover" src="" alt="Thumbnail View" onerror="fallbackQualityEngine()">
+                    <img id="previewImg" class="w-full h-full object-cover" src="" alt="Thumbnail Frame Preview" onerror="applyFallbackImage()">
                 </div>
-                <div class="flex justify-between items-center mt-3 text-[10px] font-mono text-gray-500">
-                    <span id="labelDisplayNode">ID / ------</span>
+                <div class="mt-3 text-[10px] font-mono text-gray-500">
+                    <span id="displayVideoId">ID / ------</span>
                 </div>
             </div>
 
-            <!-- Download Button Interface Component -->
+            <!-- Action File Downloader Structure -->
             <div class="bg-[#141414] border border-gray-800 rounded-2xl p-5 shadow-xl">
                 <h3 class="text-xl font-bold text-white mb-1">आपका thumbnail तैयार है।</h3>
                 <p class="text-xs text-gray-400 mb-4">नीचे दिए गए बटन पर क्लिक करके इमेज को सीधे अपने डिवाइस में सेव करें।</p>
                 
-                <button onclick="executeBlobDownloadRoutine()" class="w-full bg-white hover:bg-gray-200 text-black font-extrabold py-3.5 rounded-xl text-sm transition active:scale-[0.98]">
+                <button onclick="downloadActiveThumbnail()" class="w-full bg-white hover:bg-gray-200 text-black font-extrabold py-3.5 rounded-xl text-sm transition active:scale-[0.98]">
                     फ़ाइल डाउनलोड करें
                 </button>
             </div>
         </div>
     </main>
 
-    <!-- Footer Meta Layout -->
+    <!-- Bottom Footer Layout -->
     <footer class="text-center py-6 text-[10px] text-gray-600 font-mono border-t border-gray-950">
-        Ready to download. <span onclick="resetWorkspaceDesk()" class="text-red-500 cursor-pointer hover:underline ml-1">🔄 नया link</span>
+        Ready to download. <span onclick="resetUILayout()" class="text-red-500 cursor-pointer hover:underline ml-1">🔄 नया link</span>
     </footer>
 
-    <!-- Verification Logic Block -->
+    <!-- Logic Manipulation Scripts Node -->
     <script>
-        let globalCleanVideoId = "";
-        let primaryHighResUrl = "";
-        let fallbackStandardUrl = "";
-        let finalDownloadableUrl = "";
+        let extractedIdString = "";
+        let finalMaxResUrl = "";
+        let backupHqUrl = "";
+        let imageDownloadTarget = "";
 
-        // Fixed Extraction Array Item Pointer Node
-        function sliceYoutubeStringId(url) {
-            const pattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            const match = url.match(pattern);
-            // Index 1 accesses ONLY the raw alphanumeric ID string token securely
-            return (match && match.length > 1) ? match[1] : null;
+        // Fixed Clean String Identification Method
+        function parseYoutubeUrl(url) {
+            // Strict match check loops to isolate only the exact valid string part
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            if (match && match[2].length === 11) {
+                return match[2]; // Fixed: Returns ONLY the clear 11-digit text token
+            }
+            return null;
         }
 
-        function processThumbnailEngine() {
-            const inputNode = document.getElementById('youtubeUrlField');
-            const videoId = sliceYoutubeStringId(inputNode.value.trim());
-            const workspace = document.getElementById('displayWorkspace');
+        function processThumbnail() {
+            const inputField = document.getElementById('youtubeInput');
+            const cleanId = parseYoutubeUrl(inputField.value.trim());
+            const displayArea = document.getElementById('resultOutputArea');
 
-            if (!videoId) {
+            if (!cleanId) {
                 alert('कृपया एक सही YouTube वीडियो या Shorts का लिंक डालें!');
                 return;
             }
 
-            globalCleanVideoId = videoId;
-            primaryHighResUrl = `https://youtube.com{videoId}/maxresdefault.jpg`;
-            fallbackStandardUrl = `https://youtube.com{videoId}/hqdefault.jpg`;
-            finalDownloadableUrl = primaryHighResUrl;
+            extractedIdString = cleanId;
+            finalMaxResUrl = "https://youtube.com" + cleanId + "/maxresdefault.jpg";
+            backupHqUrl = "https://youtube.com" + cleanId + "/hqdefault.jpg";
+            imageDownloadTarget = finalMaxResUrl;
 
-            // Direct data setup without breaks
-            document.getElementById('imagePreviewElement').src = primaryHighResUrl;
-            document.getElementById('labelDisplayNode').textContent = `ID / ${videoId}`;
+            // Direct data binding to nodes without template breaks
+            document.getElementById('previewImg').src = finalMaxResUrl;
+            document.getElementById('displayVideoId').textContent = "ID / " + cleanId;
 
-            // Unhide the panel right underneath the input panel automatically
-            workspace.classList.remove('hidden');
-            workspace.scrollIntoView({ behavior: 'smooth' });
+            // Instantly unhide the view block right below the form panel automatically
+            displayArea.classList.remove('hidden');
+            displayArea.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Auto-switch engine if 1080p asset fails to load safely
-        function fallbackQualityEngine() {
-            const preview = document.getElementById('imagePreviewElement');
-            if (preview.src === primaryHighResUrl) {
-                preview.src = fallbackStandardUrl;
-                finalDownloadableUrl = fallbackStandardUrl;
+        // Switches frame image safely if the video metadata does not contain 1080p source asset
+        function applyFallbackImage() {
+            const currentImg = document.getElementById('previewImg');
+            if (currentImg.src === finalMaxResUrl) {
+                currentImg.src = backupHqUrl;
+                imageDownloadTarget = backupHqUrl;
             }
         }
 
-        // Serverless File Downloader Loop
-        async function executeBlobDownloadRoutine() {
-            if (!finalDownloadableUrl) return;
+        // Modern Cross-Origin Safe Dynamic Downloader 
+        async function downloadActiveThumbnail() {
+            if (!imageDownloadTarget) return;
             
             try {
-                // Streaming chunk buffer to force device native file saving alerts
-                const res = await fetch(finalDownloadableUrl);
-                const blob = await res.blob();
-                const blobLocalUrl = window.URL.createObjectURL(blob);
+                const response = await fetch(imageDownloadTarget);
+                const imageBlob = await response.blob();
+                const browserBlobUrl = window.URL.createObjectURL(imageBlob);
                 
-                const virtualLink = document.createElement('a');
-                virtualLink.style.display = 'none';
-                virtualLink.href = blobLocalUrl;
-                virtualLink.download = `YouTube-Thumbnail-${globalCleanVideoId}.jpg`;
+                const virtualAnchor = document.createElement('a');
+                virtualAnchor.style.display = 'none';
+                virtualAnchor.href = browserBlobUrl;
+                virtualAnchor.download = "Thumbnail-" + extractedIdString + ".jpg";
                 
-                document.body.appendChild(virtualLink);
-                virtualLink.click();
+                document.body.appendChild(virtualAnchor);
+                virtualAnchor.click();
                 
-                window.URL.revokeObjectURL(blobLocalUrl);
-                document.body.removeChild(virtualLink);
-            } catch (err) {
-                // Secure Fallback if browser cross-origin policy intercepts high-level fetch streams
-                window.open(finalDownloadableUrl, '_blank');
+                window.URL.revokeObjectURL(browserBlobUrl);
+                document.body.removeChild(virtualAnchor);
+            } catch (error) {
+                // Secure Fallback routine to trigger browser view options alternative
+                window.open(imageDownloadTarget, '_blank');
             }
         }
 
-        function wipeInputField() {
-            document.getElementById('youtubeUrlField').value = "";
+        function clearInputField() {
+            document.getElementById('youtubeInput').value = "";
         }
 
-        function resetWorkspaceDesk() {
-            wipeInputField();
-            document.getElementById('displayWorkspace').classList.add('hidden');
+         Gentile state reset system 
+        function resetUILayout() {
+            clearInputField();
+            document.getElementById('resultOutputArea').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        async function handleClipboardPaste() {
+        async function pasteClipboardData() {
             try {
-                const clipText = await navigator.clipboard.readText();
-                document.getElementById('youtubeUrlField').value = clipText;
-            } catch (e) {
-                alert('Clipboard access manual override needed.');
+                const text = await navigator.clipboard.readText();
+                document.getElementById('youtubeInput').value = text;
+            } catch (err) {
+                console.log('Manual enter fallback.');
             }
         }
     </script>
