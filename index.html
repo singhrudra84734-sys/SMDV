@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instant YouTube & Shorts Thumbnail Downloader</title>
+    <title>All-In-One Advanced Media Downloader</title>
     <!-- Tailwind CSS for Modern Premium Dark UI -->
     <script src="https://tailwindcss.com"></script>
 </head>
@@ -13,19 +13,19 @@
     <header class="bg-slate-900 border-b border-slate-800 p-5 shadow-xl">
         <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <div class="bg-rose-600 text-white p-2.5 rounded-xl font-black text-xl shadow-lg shadow-rose-600/30">
-                    🖼️
+                <div class="bg-indigo-600 text-white p-2.5 rounded-xl font-black text-xl shadow-lg shadow-indigo-600/30">
+                    🚀
                 </div>
                 <div>
-                    <h1 class="text-xl font-extrabold tracking-tight text-white">ThumbGrab <span class="text-rose-500">Pro</span></h1>
+                    <h1 class="text-xl font-extrabold tracking-tight text-white">MediaGrab <span class="text-indigo-500">Ultra</span></h1>
                     <p class="text-xs text-emerald-400 flex items-center gap-1 font-mono">
                         <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        Supports Normal Videos & Shorts | 100% Fixed
+                        Multi-Platform: YT, Shorts, Insta & Pinterest
                     </p>
                 </div>
             </div>
             <span class="text-[11px] font-mono bg-slate-950 px-3 py-1.5 rounded-md border border-slate-800 text-slate-400">
-                Status: Bypassed & Independent
+                Engine: Serverless Open-Fetch
             </span>
         </div>
     </header>
@@ -35,129 +35,111 @@
         
         <!-- Input Form Desk -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl mb-8">
-            <h2 class="text-base font-semibold text-slate-200 mb-3">Paste YouTube Video or Shorts Link Here:</h2>
+            <h2 class="text-base font-semibold text-slate-200 mb-3">Paste Link (YouTube, Shorts, Instagram, or Pinterest):</h2>
             <div class="flex flex-col sm:flex-row gap-3">
-                <input type="text" id="youtubeLink" placeholder="Paste link (e.g., https://youtube.com... ya watch?v=...)" class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-rose-500 font-mono tracking-wide placeholder-slate-600">
-                <button onclick="extractThumbnails()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-rose-600/20 active:scale-95 whitespace-nowrap">
-                    Fetch Thumbnails ⚡
+                <input type="text" id="mediaLink" placeholder="Paste url here..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono tracking-wide placeholder-slate-600">
+                <button onclick="processMediaLink()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-indigo-600/20 active:scale-95 whitespace-nowrap">
+                    Grab Media ⚡
                 </button>
             </div>
-            <div id="errorMessage" class="text-rose-400 text-xs mt-2 font-mono hidden">⚠️ Invalid URL! Kripya sahi YouTube link enter karein.</div>
+            <div id="errorMessage" class="text-rose-400 text-xs mt-2 font-mono hidden">⚠️ Invalid URL! Kripya support kiya gaya sahi link enter karein.</div>
         </div>
 
-        <!-- Output Cards Grid Layout (Hidden by default) -->
+        <!-- Output Cards Layout (Hidden by default) -->
         <div id="resultsLayout" class="hidden space-y-8">
             
-            <!-- Category Title -->
             <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <span>✨</span> Available Resolutions
+                    <span>✨</span> Generated Result
                 </h3>
-                <span class="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">Tip: Image open hone par long press karke save kar sakte hain.</span>
             </div>
 
-            <!-- Resolution Blocks -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <!-- 1. Ultra HD Resolution -->
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-md">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-xs font-bold text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded font-mono">Maximum Quality (1080p/720p)</span>
-                        </div>
-                        <img id="imgMax" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Max Quality Thumbnail">
+            <div class="max-w-xl mx-auto bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-md">
+                <div>
+                    <span id="platformBadge" class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded font-mono">Platform</span>
+                    <div class="mt-4 aspect-video w-full rounded-lg border border-slate-950 bg-slate-950 overflow-hidden flex items-center justify-center">
+                        <img id="mediaPreview" class="w-full h-full object-contain hidden" src="" alt="Preview">
+                        <div id="loadingPlaceholder" class="text-sm text-slate-500 font-mono">Processing...</div>
                     </div>
-                    <button onclick="triggerDownload('imgMax')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Open Ultra HD
-                    </button>
                 </div>
-
-                <!-- 2. High Quality Resolution -->
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-md">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded font-mono">High Quality (480p)</span>
-                        </div>
-                        <img id="imgHq" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="High Quality Thumbnail">
-                    </div>
-                    <button onclick="triggerDownload('imgHq')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Open HQ Thumbnail
-                    </button>
-                </div>
-
-                <!-- 3. Medium Quality -->
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-md">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded font-mono">Medium Quality (360p)</span>
-                        </div>
-                        <img id="imgMq" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Medium Quality Thumbnail">
-                    </div>
-                    <button onclick="triggerDownload('imgMq')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Open Medium Res
-                    </button>
-                </div>
-
-                <!-- 4. Standard Quality -->
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-md">
-                    <div>
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="text-xs font-bold text-slate-400 bg-slate-500/10 px-2.5 py-1 rounded font-mono">Standard Quality (Normal)</span>
-                        </div>
-                        <img id="imgDefault" class="w-full aspect-video object-cover rounded-lg border border-slate-950 bg-slate-950" src="" alt="Standard Quality Thumbnail">
-                    </div>
-                    <button onclick="triggerDownload('imgDefault')" class="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-xs font-bold py-3 rounded-lg transition text-center tracking-wide border border-slate-700/40">
-                        Open Normal Res
-                    </button>
-                </div>
-
+                <button onclick="triggerDownload()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-3 rounded-lg transition text-center tracking-wide shadow-md">
+                    Open / Download Media
+                </button>
             </div>
+
         </div>
     </main>
 
     <!-- App System Footer -->
     <footer class="bg-slate-950 border-t border-slate-900 text-center py-5 text-xs text-slate-600 font-mono">
-        <p>Pure Client-Side Regex Parser. Data stays on your screen.</p>
+        <p>Advanced Open-Source Sandbox. Data stays on your screen.</p>
     </footer>
 
     <!-- Logic Processing Script Operations -->
     <script>
-        // Robust URL Parser for Normal Videos, Shorts, Embeds, and Mobile App Share Links
-        function parseYoutubeId(url) {
-            const pattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            const match = url.match(pattern);
-            return (match && match[1]) ? match[1] : null;
-        }
+        let currentTargetUrl = "";
 
-        function extractThumbnails() {
-            const inputField = document.getElementById('youtubeLink');
+        function processMediaLink() {
+            const inputUrl = document.getElementById('mediaLink').value.trim();
             const errorBox = document.getElementById('errorMessage');
             const resultsBox = document.getElementById('resultsLayout');
-            
-            const videoId = parseYoutubeId(inputField.value.trim());
+            const previewImg = document.getElementById('mediaPreview');
+            const placeholder = document.getElementById('loadingPlaceholder');
+            const badge = document.getElementById('platformBadge');
 
-            if (!videoId) {
-                errorBox.classList.remove('hidden');
-                resultsBox.classList.add('hidden');
+            errorBox.classList.add('hidden');
+            resultsBox.classList.add('hidden');
+            previewImg.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+
+            // 1. Check for YouTube / Shorts
+            const ytPattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|shorts\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const ytMatch = inputUrl.match(ytPattern);
+
+            if (ytMatch && ytMatch[1]) {
+                const videoId = ytMatch[1];
+                currentTargetUrl = `https://youtube.com{videoId}/maxresdefault.jpg`;
+                
+                badge.textContent = "YouTube Video / Shorts";
+                previewImg.src = currentTargetUrl;
+                previewImg.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                resultsBox.classList.remove('hidden');
                 return;
             }
 
-            errorBox.classList.add('hidden');
+            // 2. Check for Instagram
+            if (inputUrl.includes("instagram.com")) {
+                // Instagram images/reels directly embedded extraction format
+                let cleanUrl = inputUrl.split('?')[0];
+                if (!cleanUrl.endsWith('/')) cleanUrl += '/';
+                currentTargetUrl = `${cleanUrl}media/?size=l`;
 
-            // Fixed Code: Extracting exact string values from global YouTube image nodes
-            document.getElementById('imgMax').src = `https://youtube.com{videoId}/maxresdefault.jpg`;
-            document.getElementById('imgHq').src = `https://youtube.com{videoId}/hqdefault.jpg`;
-            document.getElementById('imgMq').src = `https://youtube.com{videoId}/mqdefault.jpg`;
-            document.getElementById('imgDefault').src = `https://youtube.com{videoId}/default.jpg`;
+                badge.textContent = "Instagram Media";
+                previewImg.src = currentTargetUrl;
+                previewImg.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                resultsBox.classList.remove('hidden');
+                return;
+            }
 
-            resultsBox.classList.remove('hidden');
+            // 3. Check for Pinterest
+            if (inputUrl.includes("pinterest.com") || inputUrl.includes("pin.it")) {
+                // Open fallback node directly since Pinterest enforces strict token policies
+                badge.textContent = "Pinterest Pin";
+                placeholder.textContent = "Pinterest security is high. Click below to open and extract direct asset.";
+                currentTargetUrl = inputUrl;
+                resultsBox.classList.remove('hidden');
+                return;
+            }
+
+            // If nothing matches
+            errorBox.classList.remove('hidden');
         }
 
-        // Direct clean viewer opener
-        function triggerDownload(elementId) {
-            const sourceUrl = document.getElementById(elementId).src;
-            if (sourceUrl) {
-                window.open(sourceUrl, '_blank');
+        function triggerDownload() {
+            if (currentTargetUrl) {
+                window.open(currentTargetUrl, '_blank');
             }
         }
     </script>
